@@ -1,31 +1,34 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import softPiano from '../assets/music/softPiano.mp3';
-import birdsImage from '../assets/images/birdImage.png'; // Import the birds image
-import treeImage from '../assets/images/treeImage.png'; // Import the tree image
-import usImage from '../assets/images/usImage.png'; // Import the us image
-import palace from '../assets/images/palace.png';
-import loveballoon from '../assets/images/loveballoon.png';
-import cloud from '../assets/images/cloud.png';
-import paper from '../assets/images/paper.png';
-import doorClosed from '../assets/images/door.png';
-import doorOpen from '../assets/images/opendoor.png';
+import softPiano from '../assets/music/intro/softPiano.mp3';
+import birdsImage from '../assets/images/intro/birdImage.png'; // Import the birds image
+import treeImage from '../assets/images/intro/treeImage.png'; // Import the tree image
+import usImage from '../assets/images/intro/usImage.png'; // Import the us image
+import palace from '../assets/images/intro/palace.png';
+import loveballoon from '../assets/images/intro/loveballoon.png';
+import cloud from '../assets/images/intro/cloud.png';
+import paper from '../assets/images/intro/paper.png';
+import doorClosed from '../assets/images/intro/door.png';
+import doorOpen from '../assets/images/intro/opendoor.png';
+import wronganswer from '../assets/images/intro/wronganswer.png';
+import correctSound from '../assets/music/intro/correctSound.mp3';
+import wrongSound from '../assets/music/intro/wrongSound.mp3';
 
 const questions = [
   {
-    question: "Ngày đầu tiên chúng ta gặp nhau là ngày nào?",
+    question: "Ngày đầu tiên chúng mình yêu nhau là ngày nào ó?",
     options: ["A. 1/1/2022", "B. 17/12/2022", "C. 25/12/2021", "D. 14/2/2022"],
     correct: "B. 17/12/2022",
   },
   {
     question: "Alvin thích món ăn nào nhất?",
-    options: ["A. Pizza", "B. Sushi", "C. Bánh mì", "D. Bún bò"],
-    correct: "A. Pizza",
+    options: ["A. Cá kèo", "B. Sushi", "C. Bún đậu", "D. Bánh Pao"],
+    correct: "D. Bánh Pao",
   },
   {
-    question: "Địa điểm đầu tiên chúng ta đi chơi cùng nhau?",
-    options: ["A. Công viên", "B. Rạp chiếu phim", "C. Quán cà phê", "D. Nhà sách"],
-    correct: "C. Quán cà phê",
+    question: "Chỗ đầu tiên chúng mình tiếp xúc nhau?",
+    options: ["A. Quán net", "B. Công viên", "C. Quán cà phê", "D. Nhà sách"],
+    correct: "A. Quán net",
   },
 ];
 
@@ -33,7 +36,10 @@ const Intro = () => {
   const [step, setStep] = useState(0);
   const [doorOpenState, setDoorOpenState] = useState(false); // State to control the door
   const [showContent, setShowContent] = useState(false); // State to control when to show main content
+  const [showWrongImage, setShowWrongImage] = useState(false); // State to show wrong answer image
   const audioRef = useRef(null);
+  const correctSoundRef = useRef(null);
+  const wrongSoundRef = useRef(null);
 
   useEffect(() => {
     let timer;
@@ -75,15 +81,31 @@ const Intro = () => {
 };
 
 
+  // Function to handle answer selection
   const handleAnswer = (index, answer) => {
     if (answer === questions[index].correct) {
-      setStep(step + 1);
+      // Play correct sound
+      if (correctSoundRef.current) {
+        correctSoundRef.current.play();
+      }
+      setStep(step + 1); // Move to the next question
+    } else {
+      // Play wrong sound and show wrong image for 1 second
+      if (wrongSoundRef.current) {
+        wrongSoundRef.current.play();
+      }
+      setShowWrongImage(true);
+      setTimeout(() => {
+        setShowWrongImage(false);
+      }, 1500); // Show the wrong answer image for 1 second
     }
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-pink-50 relative" style={{ overflow: 'hidden' }}>
-      <audio ref={audioRef} src={softPiano} autoPlay loop volume="0.5" />
+      <audio ref={audioRef} src={softPiano} loop volume="0.5" />
+      <audio ref={correctSoundRef} src={correctSound} volume="0.2" />
+      <audio ref={wrongSoundRef} src={wrongSound} volume="0.2" />
 
       {!showContent && (
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
@@ -92,15 +114,15 @@ const Intro = () => {
             <motion.img 
               src={doorClosed}
               alt="Closed Door"
-              onClick={handleDoorClick} // Click event to open the door
+              onClick={handleDoorClick} 
               className="cursor-pointer"
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }} // No fade-out when the door is clicked
-              transition={{ duration: 0.5 }} // No transition needed for the closed door
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 0.5 }} 
               style={{
-                width: '500px', // Adjust size as needed
-                zIndex: 10, // Ensure it is above other elements initially
+                width: '500px', 
+                zIndex: 10, 
               }}
             />
           )}
@@ -113,15 +135,35 @@ const Intro = () => {
               className="absolute"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0}} // Smooth fade-out when transitioning to content
-              transition={{ duration: 0.5 }} // Smooth transition duration for appearance
+              exit={{ opacity: 0}} 
+              transition={{ duration: 0.5 }} 
               style={{
                 width: '500px',
-                zIndex: 9, // Slightly below other elements to avoid overlapping issues
+                zIndex: 9, 
               }}
             />
           )}
         </div>
+      )}
+
+      {/* Show wrong answer image if wrong answer selected */}
+      {showWrongImage && (
+        <motion.img
+          src={wronganswer}
+          alt="Wrong Answer"
+          className="absolute"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          style={{
+            top: '300px',
+            right: '400px',
+            transform: 'translateX(-50%)',
+            width: '200px',
+            zIndex: 15,
+          }}
+        />
       )}
 
       {/* Show main content after the door opens */}
@@ -166,13 +208,27 @@ const Intro = () => {
             }}
           />
 
+          {/* Text above the Palace Image */}
+          <h2
+            className="absolute text-pink-700 font-bold"
+            style={{
+              bottom: '5px', // Position this just above the palace
+              right: '200px', // Adjust this to position centrally over the palace
+              fontSize: '30px', // Adjust the size as needed
+              fontFamily: 'Hatton-Regular', // Make sure the font matches your design
+              zIndex: 2, // Ensure it's above the palace image
+            }}
+          >
+            Land of Love
+          </h2>
+
           {/* Palace Image */}
           <img
             src={palace}
             alt="palace"
             className="absolute"
             style={{
-              bottom: '-50px',
+              bottom: '-10px',
               right: '20px',
               width: '550px',
               zIndex: 1,
@@ -185,7 +241,7 @@ const Intro = () => {
             alt="loveballoon"
             className="absolute"
             style={{
-              bottom: '300px',
+              bottom: '350px',
               right: '30px',
               width: '100px',
               zIndex: 1,
