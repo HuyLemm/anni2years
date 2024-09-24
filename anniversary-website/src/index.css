@@ -11,14 +11,14 @@
   }
   
   @font-face {
-    font-family: 'DFVN-Pencerio';
+    font-family: 'Pencerio';
     src: url('../src/assets/fonts/DFVN\ Pencerio.otf') format('truetype'); /* Đảm bảo đường dẫn đúng với file font */
     font-weight: normal;
     font-style: normal;
   }
   
   @font-face {
-    font-family: 'DFVN-TAN';
+    font-family: 'TAN';
     src: url('../src/assets/fonts/DFVN\ TAN\ -\ HARMONI.otf') format('truetype'); /* Đảm bảo đường dẫn đúng với file font */
     font-weight: normal;
     font-style: normal;
@@ -27,6 +27,13 @@
   @font-face {
     font-family: 'Hoasen';
     src: url('../src/assets/fonts/Hoa\ Sen\ Typeface.ttf') format('truetype'); /* Đảm bảo đường dẫn đúng với file font */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Boris';
+    src: url(../src/assets/fonts/DFVN\ Boris.otf) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
