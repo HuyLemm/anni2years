@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'; 
 import softPiano from '../assets/music/intro/softPiano.mp3';
 import birdsImage from '../assets/images/intro/birdImage.png'; // Import the birds image
 import treeImage from '../assets/images/intro/treeImage.png'; // Import the tree image
@@ -20,6 +21,7 @@ import button from '../assets/images/intro/button.png';
 import beepSound from '../assets/music/intro/beepSound.mp3';
 import road from '../assets/images/intro/road.png';
 import racing from '../assets/images/intro/racing.png';
+import racingSound from '../assets/music/intro/racingSound.mp3';
 
 
 const questions = [
@@ -47,9 +49,12 @@ const Intro = () => {
   const [showWrongImage, setShowWrongImage] = useState(false); 
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showRoad, setShowRoad] = useState(false);
+  const [bikeRacing, setBikeRacing] = useState(false);
 
 
-  const audioRef = useRef(null);
+  const audioRef = useRef(null);  
+  const navigate = useNavigate(); 
+
 
   useEffect(() => {
     let timer;
@@ -112,14 +117,18 @@ const Intro = () => {
   // Function to handle button click
   const handleButtonClick = () => {
     setButtonClicked(true); 
-    setShowRoad(true); 
+    setShowRoad(true);
+    setBikeRacing(true); 
     const beepAudio = new Audio(beepSound);
     beepAudio.volume = 0.2; 
     beepAudio.play();
+    const racingAudio = new Audio(racingSound);
+    racingAudio.volume = 0.2;
+    racingAudio.play();
   };
-
+  
   return (
-    <div className="h-screen flex items-center justify-center bg-pink-50 relative" style={{ overflow: 'hidden' }}>
+    <div className="h-screen flex items-center justify-center  relative" style={{ overflow: 'hidden' }}>
       <audio ref={audioRef} src={softPiano} loop volume="0.5" />
 
       {!showContent && (
@@ -404,6 +413,33 @@ const Intro = () => {
                   />
                 )}
 
+                {/* Racing Bike Animation - Moving from A to B vertically, then to C horizontally */}
+                {bikeRacing && (
+                  <motion.img
+                    src={racing}
+                    alt="racing"
+                    className="absolute"  
+                    initial={{ x: '0px', y: '-100px' }} 
+                    animate={{
+                      x: ['0px', '0px', '330px'], // 3rd
+                      y: ['-100px', '230px', '230px'], // 2nd
+                      rotate: [0, -5, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 6, 
+                      ease: 'easeInOut', 
+                      onComplete: () => {
+                        navigate('/intro2');
+                      },
+                    }}
+                    style={{
+                      top: '350px' ,
+                      left: '200px', 
+                      width: '100px', 
+                      zIndex: 5, 
+                    }}
+                  />
+                )}
               </motion.div>
             )}
             <style>
