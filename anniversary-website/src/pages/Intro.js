@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
 import softPiano from '../assets/music/intro/softPiano.mp3';
-import birdsImage from '../assets/images/intro/birdImage.png'; // Import the birds image
-import treeImage from '../assets/images/intro/treeImage.png'; // Import the tree image
-import usImage from '../assets/images/intro/usImage.png'; // Import the us image
+import birdsImage from '../assets/images/intro/birdImage.png'; 
+import treeImage from '../assets/images/intro/treeImage.png';
+import usImage from '../assets/images/intro/usImage.png'; 
 import palace from '../assets/images/intro/palace.png';
 import loveballoon from '../assets/images/intro/loveballoon.png';
 import cloud from '../assets/images/intro/cloud.png';
@@ -21,7 +21,11 @@ import button from '../assets/images/intro/button.png';
 import beepSound from '../assets/music/intro/beepSound.mp3';
 import road from '../assets/images/intro/road.png';
 import racing from '../assets/images/intro/racing.png';
-import racingSound from '../assets/music/intro/racingSound.mp3';
+import chillSound from '../assets/music/intro/chillSound.mp3';
+import paoi from'../assets/images/intro/paoi.png';
+import alvin from'../assets/images/intro/alvin.png';
+import alvinthink from '../assets/images/intro/alvinthink.png';
+import paoithink from '../assets/images/intro/paoithink.png';
 
 
 const questions = [
@@ -31,12 +35,12 @@ const questions = [
     correct: "B. 17/12/2022",
   },
   {
-    question: "Alvin thích món ăn nào nhất?",
+    question: "Alvin thích món ăn nào nhất ó? ♥‿♥",
     options: ["A. Cá kèo", "B. Sushi", "C. Bún đậu", "D. Bánh Pao"],
     correct: "D. Bánh Pao",
   },
   {
-    question: "Chỗ đầu tiên chúng mình tiếp xúc nhau?",
+    question: "Chỗ nào là chỗ đầu tiên chúng mình tiếp xúc nhau ó?",
     options: ["A. Quán net", "B. Công viên", "C. Quán cà phê", "D. Nhà sách"],
     correct: "A. Quán net",
   },
@@ -51,9 +55,8 @@ const Intro = () => {
   const [showRoad, setShowRoad] = useState(false);
   const [bikeRacing, setBikeRacing] = useState(false);
 
-
-  const audioRef = useRef(null);  
   const navigate = useNavigate(); 
+  const softPianoAudio = useRef(new Audio(softPiano));
 
 
   useEffect(() => {
@@ -71,24 +74,16 @@ const Intro = () => {
       handleStepTransition(2, 4500);
     }
 
-    const playAudio = () => {
-      if (audioRef.current) {
-        audioRef.current.play().catch((error) => {
-          console.log('Autoplay blocked, trying after user interaction:', error);
-        });
-      }
-    };
-
-    window.addEventListener('click', playAudio);
-
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('click', playAudio);
     };
   }, [step]);
 
   // Function to handle door click event
   const handleDoorClick = () => {
+    softPianoAudio.current.volume = 1;
+    softPianoAudio.current.loop = true;
+    softPianoAudio.current.play();
     setDoorOpenState(true);
     setTimeout(() => {
         setShowContent(true);
@@ -102,11 +97,13 @@ const Intro = () => {
       const correctAudio = new Audio(correctSound);
       correctAudio.volume = 0.2; 
       correctAudio.play();
+
       setStep(step + 1); 
     } else {
       const wrongAudio = new Audio(wrongSound);
       wrongAudio.volume = 0.2; 
       wrongAudio.play();
+
       setShowWrongImage(true);
       setTimeout(() => {
         setShowWrongImage(false);
@@ -119,21 +116,100 @@ const Intro = () => {
     setButtonClicked(true); 
     setShowRoad(true);
     setBikeRacing(true); 
+
+    if (softPianoAudio.current) {
+      softPianoAudio.current.pause();
+      softPianoAudio.current.currentTime = 0; 
+    }
+
     const beepAudio = new Audio(beepSound);
     beepAudio.volume = 0.2; 
     beepAudio.play();
-    const racingAudio = new Audio(racingSound);
-    racingAudio.volume = 0.2;
-    racingAudio.play();
+
+    const chillAudio = new Audio(chillSound);
+    chillAudio.volume = 0.2;
+    chillAudio.play();
   };
   
   return (
     <div className="h-screen flex items-center justify-center  relative" style={{ overflow: 'hidden' }}>
-      <audio ref={audioRef} src={softPiano} loop volume="0.5" />
 
       {!showContent && (
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-          {/* Display closed door initially */}
+          {/* Display paoi */}
+          {!doorOpenState && (
+            <motion.img 
+              src={paoi}
+              alt="Paoi"
+              className='absolute'
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 0.5 }} 
+              style={{bottom: '100px', left: '560px', width: '150px', zIndex: 10, }}
+            />
+          )}
+
+          {!doorOpenState && (
+            <motion.img 
+              src={paoithink}
+              alt="Paoithink"
+              className='absolute'
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 0.5 }} 
+              style={{bottom: '250px', left: '220px', width: '400px', zIndex: 10, }}
+            />
+          )}
+
+          {!doorOpenState && (
+            <p
+              className='absolute text-center text-pink-700' 
+              style={{ bottom: '390px', left: '295px', fontSize: '21px', zIndex: 11, fontFamily: 'Boris', lineHeight:'1.5', letterSpacing: '0.05em' }} // Điều chỉnh vị trí và style tùy ý
+            >
+             Troy oy dễ thưn quó! <br/> Phải up Locket huiiii <br/>😍
+            </p>
+          )}
+
+
+          {/* Display Alvin */}
+          {!doorOpenState && (
+            <motion.img 
+              src={alvinthink}
+              alt="alvinthink"
+              className='absolute'
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 0.5 }} 
+              style={{bottom: '180px', right: '-50px', width: '400px', zIndex: 10, }}
+            />
+            
+          )}
+
+          {!doorOpenState && (
+            <p
+              className='absolute text-center text-pink-700' 
+              style={{ bottom: '325px', right: '70px', fontSize: '21px', zIndex: 11, fontFamily: 'Boris', lineHeight:'1.5', letterSpacing: '0.05em' }} // Điều chỉnh vị trí và style tùy ý
+            >
+              Alvin's watching u <br/> Muahahaha <br/> 💘
+            </p>
+          )}
+
+          {!doorOpenState && (
+            <motion.img 
+              src={alvin}
+              alt="alvin"
+              className='absolute'
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 0.5 }} 
+              style={{bottom: '0px', right: '0px', width: '200px', zIndex: 10, }}
+            />
+          )}
+
           {!doorOpenState && (
             <motion.img 
               src={doorClosed}
@@ -144,8 +220,7 @@ const Intro = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }} 
               transition={{ duration: 0.5 }} 
-              style={{
-                width: '500px', zIndex: 10, }}
+              style={{width: '500px', zIndex: 10, }}
             />
           )}
           {/* Display open door once clicked */}
@@ -260,9 +335,9 @@ const Intro = () => {
               >
                 <h1
                   className="text-4xl font-bold text-pink-700"
-                  style={{ fontSize: '55px', fontFamily: 'Hoasen' }}
+                  style={{ fontSize: '53px', fontFamily: 'Hoasen' }}
                 >
-                  Chào mừng đến với Xứ sở Tình yêu!
+                  Chào mừng đến với Xứ sở Tình yêu!🌷
                 </h1>
               </motion.div>
             )}
@@ -281,7 +356,7 @@ const Intro = () => {
                   style={{ fontSize: '40px', fontFamily: 'Hoasen', lineHeight: '1.5', letterSpacing: '0.05em', }}
                 >
                   Trước khi vào, trả lời giúp anh vài câu hỏi để xem em có đúng là<br />
-                  <strong>Paoi yêu dấu của Alvin</strong> hong nho!
+                  <strong>Paoi yêu dấu của Alvin</strong> hong nho!💓
                 </p>
               </motion.div>
             )}
@@ -363,7 +438,7 @@ const Intro = () => {
                 className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 onAnimationStart={() => {
                   const tadaAudio = new Audio(tadaSound);
-                  tadaAudio.volume = 0.2; 
+                  tadaAudio.volume = 0.1; 
                   tadaAudio.play();
                 }}
                 style={{ zIndex: 3, top: '330px', }}
@@ -382,7 +457,7 @@ const Intro = () => {
                     className="absolute text-center text-pink-700"
                     style={{ fontSize: '21px', fontFamily: 'Boris', lineHeight: '1.5', letterSpacing: '0.05em', zIndex: 3, }}
                   >
-                    Em đúng là vợ yêu của anh òi. <br /> Anh sẽ dẫn em đi tham quan <br/>xứ sở của tụi mình nhé bby ♥
+                    Em đúng là vợ yêu của anh òi. <br /> Anh sẽ dẫn em đi tham quan <br/>xứ sở của tụi mình nhé bby 💕
                   </h2>
                 </div>
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import racing2 from '../assets/images/intro/racing2.png';
-import road2 from '../assets/images/intro/road2.png';
+import racing from '../assets/images/intro2/racing.png';
+import road from '../assets/images/intro2/road.png';
+
 
 const Intro2 = () => {
   useEffect(() => {
@@ -11,8 +12,8 @@ const Intro2 = () => {
     <div className="h-screen flex items-center justify-center relative" style={{ overflow: 'hidden' }}>
       {/* Road 2 Image */}
       <img
-        src={road2}
-        alt="Road 2"
+        src={road}
+        alt="Road"
         className="absolute"
         style={{
           top: '100px', // Tùy chỉnh vị trí top cho road2
@@ -24,8 +25,8 @@ const Intro2 = () => {
 
       {/* Racing 2 Image */}
       <img
-        src={racing2}
-        alt="Racing 2"
+        src={racing}
+        alt="Racing "
         className="absolute"
         style={{
           top: '200px', // Tùy chỉnh vị trí top cho racing2
