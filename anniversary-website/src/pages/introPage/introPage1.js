@@ -1,31 +1,31 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
-import softPiano from '../assets/music/intro/softPiano.mp3';
-import birdsImage from '../assets/images/intro/birdImage.png'; 
-import treeImage from '../assets/images/intro/treeImage.png';
-import usImage from '../assets/images/intro/usImage.png'; 
-import palace from '../assets/images/intro/palace.png';
-import loveballoon from '../assets/images/intro/loveballoon.png';
-import cloud from '../assets/images/intro/cloud.png';
-import paper from '../assets/images/intro/paper.png';
-import doorClosed from '../assets/images/intro/door.png';
-import doorOpen from '../assets/images/intro/opendoor.png';
-import wronganswer from '../assets/images/intro/wronganswer.png';
-import correctSound from '../assets/music/intro/correctSound.mp3';
-import wrongSound from '../assets/music/intro/wrongSound.mp3';
-import tadaSound from '../assets/music/intro/tadaSound.mp3';
-import border from '../assets/images/intro/border.png';
-import arrow from '../assets/images/intro/arrow.png';
-import button from '../assets/images/intro/button.png';
-import beepSound from '../assets/music/intro/beepSound.mp3';
-import road from '../assets/images/intro/road.png';
-import racing from '../assets/images/intro/racing.png';
-import chillSound from '../assets/music/intro/chillSound.mp3';
-import paoi from'../assets/images/intro/paoi.png';
-import alvin from'../assets/images/intro/alvin.png';
-import alvinthink from '../assets/images/intro/alvinthink.png';
-import paoithink from '../assets/images/intro/paoithink.png';
+import softPiano from '../../assets/music/introPage/softPiano.mp3';
+import birdsImage from '../../assets/images/introPage/introPage1/birdImage.png'; 
+import treeImage from '../../assets/images/introPage/introPage1/treeImage.png';
+import usImage from '../../assets/images/introPage/introPage1/usImage.png'; 
+import palace from '../../assets/images/introPage/introPage1/palace.png';
+import loveballoon from '../../assets/images/introPage/introPage1/loveballoon.png';
+import cloud from '../../assets/images/introPage/introPage1/cloud.png';
+import paper from '../../assets/images/introPage/introPage1/paper.png';
+import doorClosed from '../../assets/images/introPage/introPage1/door.png';
+import doorOpen from '../../assets/images/introPage/introPage1/opendoor.png';
+import wronganswer from '../../assets/images/introPage/introPage1/wronganswer.png';
+import correctSound from '../../assets/music/introPage/correctSound.mp3';
+import wrongSound from '../../assets/music/introPage/wrongSound.mp3';
+import tadaSound from '../../assets/music/introPage/tadaSound.mp3';
+import border from '../../assets/images/introPage/introPage1/border.png';
+import arrow from '../../assets/images/introPage/introPage1/arrow.png';
+import button from '../../assets/images/introPage/introPage1/button.png';
+import beepSound from '../../assets/music/introPage/beepSound.mp3';
+import road from '../../assets/images/introPage/introPage1/road.png';
+import racing from '../../assets/images/introPage/introPage1/racing.png';
+import chillSound from '../../assets/music/introPage/chillSound.mp3';
+import paoi from'../../assets/images/introPage/introPage1/paoi.png';
+import alvin from'../../assets/images/introPage/introPage1/alvin.png';
+import alvinthink from '../../assets/images/introPage/introPage1/alvinthink.png';
+import paoithink from '../../assets/images/introPage/introPage1/paoithink.png';
 
 
 const questions = [
@@ -46,7 +46,7 @@ const questions = [
   },
 ];
 
-const Intro = () => {
+const Intro1 = () => {
   const [step, setStep] = useState(0);
   const [doorOpenState, setDoorOpenState] = useState(false); 
   const [showContent, setShowContent] = useState(false); 
@@ -128,6 +128,7 @@ const Intro = () => {
 
     const chillAudio = new Audio(chillSound);
     chillAudio.volume = 0.2;
+    chillAudio.loop = true;
     chillAudio.play();
   };
   
@@ -533,4 +534,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default Intro1;
