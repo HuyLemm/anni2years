@@ -1,7 +1,17 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; 
+
+import { useAudioManager } from '../../components/AudioManager'; 
+import { questions } from '../../components/Questions';
+
 import softPiano from '../../assets/music/introPage/softPiano.mp3';
+import correctSound from '../../assets/music/introPage/correctSound.mp3';
+import wrongSound from '../../assets/music/introPage/wrongSound.mp3';
+import tadaSound from '../../assets/music/introPage/tadaSound.mp3';
+import beepSound from '../../assets/music/introPage/beepSound.mp3';
+import chillSound from '../../assets/music/introPage/chillSound.mp3';
+
 import birdsImage from '../../assets/images/introPage/introPage1/birdImage.png'; 
 import treeImage from '../../assets/images/introPage/introPage1/treeImage.png';
 import usImage from '../../assets/images/introPage/introPage1/usImage.png'; 
@@ -12,39 +22,15 @@ import paper from '../../assets/images/introPage/introPage1/paper.png';
 import doorClosed from '../../assets/images/introPage/introPage1/door.png';
 import doorOpen from '../../assets/images/introPage/introPage1/opendoor.png';
 import wronganswer from '../../assets/images/introPage/introPage1/wronganswer.png';
-import correctSound from '../../assets/music/introPage/correctSound.mp3';
-import wrongSound from '../../assets/music/introPage/wrongSound.mp3';
-import tadaSound from '../../assets/music/introPage/tadaSound.mp3';
 import border from '../../assets/images/introPage/introPage1/border.png';
 import arrow from '../../assets/images/introPage/introPage1/arrow.png';
 import button from '../../assets/images/introPage/introPage1/button.png';
-import beepSound from '../../assets/music/introPage/beepSound.mp3';
 import road from '../../assets/images/introPage/introPage1/road.png';
 import racing from '../../assets/images/introPage/introPage1/racing.png';
-import chillSound from '../../assets/music/introPage/chillSound.mp3';
 import paoi from'../../assets/images/introPage/introPage1/paoi.png';
 import alvin from'../../assets/images/introPage/introPage1/alvin.png';
 import alvinthink from '../../assets/images/introPage/introPage1/alvinthink.png';
 import paoithink from '../../assets/images/introPage/introPage1/paoithink.png';
-
-
-const questions = [
-  {
-    question: "Ngày đầu tiên chúng mình yêu nhau là ngày nào ó?",
-    options: ["A. 1/1/2022", "B. 17/12/2022", "C. 25/12/2021", "D. 14/2/2022"],
-    correct: "B. 17/12/2022",
-  },
-  {
-    question: "Alvin thích món ăn nào nhất ó? ♥‿♥",
-    options: ["A. Cá kèo", "B. Sushi", "C. Bún đậu", "D. Bánh Pao"],
-    correct: "D. Bánh Pao",
-  },
-  {
-    question: "Chỗ nào là chỗ đầu tiên chúng mình tiếp xúc nhau ó?",
-    options: ["A. Quán net", "B. Công viên", "C. Quán cà phê", "D. Nhà sách"],
-    correct: "A. Quán net",
-  },
-];
 
 const Intro1 = () => {
   const [step, setStep] = useState(0);
@@ -54,6 +40,8 @@ const Intro1 = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showRoad, setShowRoad] = useState(false);
   const [bikeRacing, setBikeRacing] = useState(false);
+
+  const { playAudio } = useAudioManager(); 
 
   const navigate = useNavigate(); 
   const softPianoAudio = useRef(new Audio(softPiano));
@@ -126,10 +114,7 @@ const Intro1 = () => {
     beepAudio.volume = 0.2; 
     beepAudio.play();
 
-    const chillAudio = new Audio(chillSound);
-    chillAudio.volume = 0.2;
-    chillAudio.loop = true;
-    chillAudio.play();
+    playAudio(chillSound); 
   };
   
   return (

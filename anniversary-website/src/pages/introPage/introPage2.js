@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+import heySound from '../../assets/music/introPage/heySound.mp3';
+
 import racing from '../../assets/images/introPage/introPage2/racing.png';
 import road from '../../assets/images/introPage/introPage2/road.png';
 import ankwypolice from '../../assets/images/introPage/introPage2/ankwypolice.png';
@@ -14,6 +16,11 @@ import square from '../../assets/images/introPage/introPage2/square.png';
 import chatalvin from '../../assets/images/introPage/introPage2/chatalvin.png';
 import chatpaoi from '../../assets/images/introPage/introPage2/chatpaoi.png';
 import chatthink from '../../assets/images/introPage/introPage2/chatthink.png';
+import house1 from '../../assets/images/introPage/introPage2/house1.png';
+import house2 from '../../assets/images/introPage/introPage2/house2.png';
+import playground from '../../assets/images/introPage/introPage2/playground.png';
+import green from '../../assets/images/introPage/introPage2/green.png';
+import picnic from '../../assets/images/introPage/introPage2/picnic.png';
 
 const Intro2 = () => {
   const [light, setLight] = useState('green');
@@ -61,6 +68,9 @@ const Intro2 = () => {
     setStartPhase2(true); // Bắt đầu Giai đoạn 2
     setTimeout(() => {
       setPoliceStatus('ankwypolice'); // Sau 1 giây, cảnh sát chuyển thành ankwypolice
+      const heyAudio = new Audio(heySound);
+      heyAudio.volume = 0.5; 
+      heyAudio.play();
     }, 1000);
 
     setTimeout(() => {
@@ -75,6 +85,15 @@ const Intro2 = () => {
 
   return (
     <div className="h-screen flex items-center relative" style={{ overflow: 'hidden' }}>
+
+      {/* Home Image */}
+      <img src={house1} alt="house1" className="absolute center" style={{ top: '80px', left: '20px', width: '400px', zIndex: 2 }} />
+      <img src={house2} alt="house2" className="absolute center" style={{ top: '140px', right: '20px', width: '600px', zIndex: 2 }} />
+      <img src={playground} alt="playground" className="absolute center" style={{ top: '580px', left: '40px', width: '400px', zIndex: 2 }} />
+      <img src={green} alt="green" className="absolute center" style={{ top: '540px', left: '-15px', width: '500px', zIndex: 1 }} />
+      <img src={picnic} alt="picnic" className="absolute center" style={{ top: '600px', right: '-15px', width: '600px', zIndex: 1 }} />
+
+
       {/* Road Image */}
       <img src={road} alt="Road" className="absolute center" style={{ left: '-530px', width: '1500px', zIndex: 1 }} />
       <img src={road} alt="Road" className="absolute center" style={{ right: '-510px', width: '1500px', zIndex: 1 }} />
@@ -262,7 +281,7 @@ const Intro2 = () => {
           initial={{ x: 800 }} // Vị trí ban đầu
           animate={{ x: 2000 }} // Vị trí kết thúc
           transition={{ duration: 6, ease: 'easeInOut' }} // Chuyển động trong 4 giây
-          style={{ top: '330px', width: '150px', zIndex: 1 }}
+          style={{ top: '330px', width: '150px', zIndex: 4 }}
         />
       )}
 

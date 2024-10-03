@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+import { useAudioManager } from '../../components/AudioManager';
+
+import eohSound from '../../assets/music/introPage/eohSound.mp3';
+import sadPiano from '../../assets/music/introPage/sadPiano.mp3';
+
 import racing from '../../assets/images/introPage/introPage3/racing.png';
 import road from '../../assets/images/introPage/introPage3/road.png';
 import motorpolice from '../../assets/images/introPage/introPage3/motorpolice.png';
@@ -9,6 +14,8 @@ import doorToHome from '../../assets/images/introPage/introPage3/doorToHome.png'
 import square from '../../assets/images/introPage/introPage3/square.png';
 import us from '../../assets/images/introPage/introPage3/us.png';
 import chatalvin from '../../assets/images/introPage/introPage3/chatalvin.png';
+import street from '../../assets/images/introPage/introPage3/street.png';
+import flower from '../../assets/images/introPage/introPage3/flower.png';
 
 
 const Intro3 = () => {
@@ -17,6 +24,8 @@ const Intro3 = () => {
   const [doorClickable, setDoorClickable] = useState(false); // Cửa chỉ có thể được nhấn sau khi chat xuất hiện
   const [showMotorPolice, setShowMotorPolice] = useState(false);
   const [doorClicked, setDoorClicked] = useState(false);
+
+  const { playAudio, stopAudio } = useAudioManager();  // Use the audio manager
 
   const navigate = useNavigate();
 
@@ -32,6 +41,12 @@ const Intro3 = () => {
       setTimeout(() => {
         setShowMotorPolice(true);
       }, 3500);
+
+      setTimeout(() => {
+        const eohAudio = new Audio(eohSound);
+        eohAudio.volume = 0.5; 
+        eohAudio.play();
+      }, 8300);
     }
   }, [showUs]);
 
@@ -47,6 +62,10 @@ const Intro3 = () => {
     <div className="h-screen flex items-center relative" style={{ overflow: 'hidden' }}>
        (
         <>
+          {/* Home Image */}
+          <img src={street} alt="street" className="absolute center" style={{ top: '70px', left: '370px', width: '600px', zIndex: 2 }} />
+          <img src={flower} alt="flower" className="absolute center" style={{ top: '240px', left: '20px', width: '400px', zIndex: 2 }} />
+
           {/* Road Image */}
           <img src={road} alt="Road" className="absolute center" style={{ left: '-100px', width: '1500px', zIndex: 1 }} />
           <img src={road} alt="Road" className="absolute center" style={{ left: '60px', width: '1500px', zIndex: 1 }} />
@@ -98,6 +117,8 @@ const Intro3 = () => {
               style={{ top: '340px', width: '150px', zIndex: 2 }}
               onAnimationComplete={() => {
                 if (!doorClicked) {
+                  stopAudio();
+                  playAudio(sadPiano)
                   navigate('/intro4')
                 }
               }} 

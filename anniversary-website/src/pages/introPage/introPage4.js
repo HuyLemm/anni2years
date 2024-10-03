@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+import { useAudioManager } from '../../components/AudioManager';
+
+import chillSound from '../../assets/music/introPage/chillSound.mp3';
+
 import chatsave from '../../assets/images/introPage/introPage3/chatsave.png';
 import borderstar from '../../assets/images/introPage/introPage3/borderstar.png';
 import star from '../../assets/images/introPage/introPage3/star.png';
@@ -12,6 +16,8 @@ const Intro4 = () => {
   const [showFirstImages, setShowFirstImages] = useState(false);
   const [showSecondImages, setShowSecondImages] = useState(false);
   const [showStar, setShowStar] = useState(false);
+
+  const { playAudio, stopAudio } = useAudioManager();
 
   const navigate = useNavigate();
 
@@ -31,6 +37,12 @@ const Intro4 = () => {
       setShowStar(true);
     }, 5500);
   }, []);
+
+  const handleStarClick = () => {
+    stopAudio(); // Stop the current music
+    playAudio(chillSound); // Play chillSound
+    navigate('/intro3'); // Navigate to intro3
+  };
 
   return (
     <div className="h-screen flex items-center relative" style={{ overflow: 'hidden' }}>
@@ -92,7 +104,7 @@ const Intro4 = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 2.5 }}
             style={{ position: 'absolute', top: '700px', left: '940px', width: '130px', zIndex: 10, cursor: 'pointer' }}
-            onClick={() => navigate('/intro3')}
+            onClick={handleStarClick}
           >
             <img src={star} alt="star" style={{ width: '100%' }} />
         </motion.div>
