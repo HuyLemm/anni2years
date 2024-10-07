@@ -7,6 +7,7 @@ import rabbit from '../assets/images/components/rabbit.png';
 import borderloading from '../assets/images/components/borderloading.png';
 import chat from '../assets/images/components/chat.png';
 import { loves } from '../components/Questions'; // Import loves array
+import tingSound from '../assets/music/components/tingSound.mp3';
 
 const LoadingBar = () => {
   const [progress, setProgress] = useState(0);
@@ -48,7 +49,7 @@ const LoadingBar = () => {
           const newProgress = oldProgress + 2.5; // Increment by 5 pixels every second
           if (newProgress >= 500) {
             clearInterval(interval);
-            navigate('/homePage'); // Navigate after loading completes
+            navigate('/preHomePage'); // Navigate after loading completes
           }
           return newProgress;
         });
@@ -73,6 +74,9 @@ const LoadingBar = () => {
   }, [navigate, isPaused]);
 
   const handleItemClick = (item) => {
+    const tingAudio = new Audio(tingSound);
+    tingAudio.volume = 0.2;
+    tingAudio.play();
     setSelectedItem(item);
     const randomSentence = item.sent[Math.floor(Math.random() * item.sent.length)];
     setRandomSent(randomSentence); // Set a new random sentence

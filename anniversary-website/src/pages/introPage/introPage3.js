@@ -6,6 +6,7 @@ import { useAudioManager } from '../../components/AudioManager';
 
 import eohSound from '../../assets/music/introPage/eohSound.mp3';
 import sadPiano from '../../assets/music/introPage/sadPiano.mp3';
+import rose from '../../assets/music/components/rose.mp3';
 
 import racing from '../../assets/images/introPage/introPage3/racing.png';
 import road from '../../assets/images/introPage/introPage3/road.png';
@@ -17,13 +18,14 @@ import chatalvin from '../../assets/images/introPage/introPage3/chatalvin.png';
 import street from '../../assets/images/introPage/introPage3/street.png';
 import flower from '../../assets/images/introPage/introPage3/flower.png';
 
-
 const Intro3 = () => {
   const [showUs, setShowUs] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [doorClickable, setDoorClickable] = useState(false); // Cửa chỉ có thể được nhấn sau khi chat xuất hiện
   const [showMotorPolice, setShowMotorPolice] = useState(false);
   const [doorClicked, setDoorClicked] = useState(false);
+  const [animationsStopped, setAnimationsStopped] = useState(false); // State to stop animations
+  const [eohTimeoutId, setEohTimeoutId] = useState(null); // Save the timeout ID
 
   const { playAudio, stopAudio } = useAudioManager();  // Use the audio manager
 
@@ -42,19 +44,30 @@ const Intro3 = () => {
         setShowMotorPolice(true);
       }, 3500);
 
-      setTimeout(() => {
-        const eohAudio = new Audio(eohSound);
-        eohAudio.volume = 0.5; 
-        eohAudio.play();
+      // Sử dụng playAudio từ useAudioManager để quản lý âm thanh eohSound
+      const timeoutId = setTimeout(() => {
+        playAudio(eohSound); // Quản lý âm thanh bằng useAudioManager
       }, 8300);
+
+      // Lưu timeoutId để hủy khi cần
+      setEohTimeoutId(timeoutId);
     }
-  }, [showUs]);
+  }, [showUs, playAudio]);
 
   // Xử lý khi nhấn vào cửa
   const handleDoorClick = () => {
     if (doorClickable) { // Chỉ cho phép cửa được ấn sau khi chat xuất hiện
       setDoorClicked(true);
-      navigate('/homePage'); // Điều hướng về homePage khi cửa được nhấn
+
+      // Hủy hẹn giờ phát âm thanh eoh nếu cửa được nhấn
+      if (eohTimeoutId) {
+        clearTimeout(eohTimeoutId); // Hủy bỏ âm thanh nếu đã nhấn cửa
+      }
+
+      stopAudio(); // Dừng tất cả các âm thanh trước khi chuyển hướng
+      setAnimationsStopped(true); // Stop all animations
+      playAudio(rose); // Phát âm thanh rose
+      navigate('/loading'); // Điều hướng về loading khi cửa được nhấn
     }
   };
 
@@ -72,7 +85,7 @@ const Intro3 = () => {
           <img src={square} alt="square" className="absolute center" style={{ right: '330px', width: '200px', zIndex: 1 }} />
 
           {/* Racing Image */}
-          {!showUs && (
+          {!showUs && !animationsStopped && (
             <motion.img
               src={racing}
               alt="Racing"
@@ -106,7 +119,7 @@ const Intro3 = () => {
           )}
 
           {/* MotorPolice bắt đầu di chuyển sau khi chat hiện xong */}
-          {showMotorPolice && (
+          {showMotorPolice && !animationsStopped && (
             <motion.img
               src={motorpolice}
               alt="motorpolice"
@@ -117,9 +130,9 @@ const Intro3 = () => {
               style={{ top: '340px', width: '150px', zIndex: 2 }}
               onAnimationComplete={() => {
                 if (!doorClicked) {
-                  stopAudio();
-                  playAudio(sadPiano)
-                  navigate('/intro4')
+                  stopAudio(); 
+                  playAudio(sadPiano); 
+                  navigate('/intro4');
                 }
               }} 
             />

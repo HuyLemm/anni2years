@@ -12,7 +12,8 @@ export const AudioManagerProvider = ({ children }) => {
     }
     const newAudio = new Audio(audioFile);
     audioRef.current = newAudio;
-    newAudio.volume = 0.5;
+    newAudio.volume = 0.4;
+    newAudio.loop = true;
     newAudio.play();
   };
 
