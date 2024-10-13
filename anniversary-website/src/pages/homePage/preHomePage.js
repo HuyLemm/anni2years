@@ -10,6 +10,22 @@ const PreHomePage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [startDoorClose, setStartDoorClose] = useState(false); // Trigger door closing animation
     const navigate = useNavigate();
+
+    const navigateToHomePage = () => {
+      // Reset unlocked islands state to only unlock the first island
+      const resetUnlockedIslands = {
+        island1: true,  // Only the first island is unlocked
+        island2: false,
+        island3: false,
+        island4: false,
+        island5: false,
+        island6: false,
+      };
+      
+      localStorage.setItem('unlockedIslands', JSON.stringify(resetUnlockedIslands));
+      localStorage.setItem('fromPreHomePage', true);  // Set the flag for door effect
+      navigate('/homePage');
+    };
   
     useEffect(() => {
       const intervals = [
@@ -29,7 +45,7 @@ const PreHomePage = () => {
     useEffect(() => {
       if (startDoorClose) {
         setTimeout(() => {
-          navigate('/homePage'); // Navigate after doors fully close
+          navigateToHomePage(); // Navigate after doors fully close
         }, 2000); // Adjust to match door close animation
       }
     }, [startDoorClose, navigate]);
