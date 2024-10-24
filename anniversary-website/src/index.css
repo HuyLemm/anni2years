@@ -38,7 +38,38 @@
     font-style: normal;
   }
 
-  html,body{
-    overflow: hidden; /* Hides both horizontal and vertical overflow */
-    background-color: #FCECF3;
-  }
+/* Toàn bộ trang web: ngăn người dùng kéo thả hoặc chọn các phần tử */
+html, body {
+  overflow: hidden; /* Hides both horizontal and vertical overflow */
+  background-color: #FCECF3;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard Syntax */
+  -webkit-touch-callout: none; /* Disable long tap menus on iOS */
+}
+
+/* Ngăn người dùng kéo thả tất cả hình ảnh */
+/* Ngăn người dùng kéo thả tất cả hình ảnh */
+img {
+  -webkit-user-drag: none;  /* Disable dragging in Safari, Chrome */
+  -moz-user-drag: none;     /* Disable dragging in Firefox */
+  -o-user-drag: none;       /* Disable dragging in older Opera */
+}
+
+/* Cho phép kéo thả chỉ trong khu vực cụ thể bằng cách thêm class */
+.allow-drag {
+  -webkit-user-drag: auto;  /* Enable dragging for elements with this class */
+  -moz-user-drag: auto;
+  -o-user-drag: auto;
+}
+
+/* Lớp cho phép chọn văn bản chỉ ở nơi cho phép */
+.allow-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+  
