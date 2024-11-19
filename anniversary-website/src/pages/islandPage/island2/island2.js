@@ -150,7 +150,7 @@ const Island2 = () => {
           transition={{ duration: 1 }}
           style={{ position: 'absolute', left: '20px', top: '350px', fontFamily: 'Boris', fontSize: '24px', color: '#000' }}
         >
-          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi 🎮</h2>
+          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi १|˚–˚|५</h2>
           <ul>
             <li>1. Sắp xếp các mảnh ghép để hoàn thành <br/> hình ảnh.</li>
             <li>2. Mỗi lần chỉ có thể di chuyển 1 mảnh ghép.</li>
@@ -216,6 +216,7 @@ const Island2 = () => {
                 backgroundColor: '#f0f0f0',
                 padding: '10px',
                 zIndex: 1,
+                
               }}
             >
               {board.map((piece, index) => (

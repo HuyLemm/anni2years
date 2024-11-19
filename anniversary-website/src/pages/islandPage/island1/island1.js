@@ -111,9 +111,9 @@ const Island1 = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ fontFamily: 'Boris', position: 'absolute', fontSize: '50px', marginTop: '20px', left: '35%', top: '0%', transform: 'translateX(-50%)' }}
+          style={{ fontFamily: 'Boris', position: 'absolute', fontSize: '50px', marginTop: '20px', left: '34%', top: '0%', transform: 'translateX(-50%)' }}
         >
-          Trò chơi tìm điểm khác biệt 🔍
+          Trò chơi tìm điểm khác biệt🕵️‍♀️
         </motion.h1>
       )}
 
@@ -125,10 +125,11 @@ const Island1 = () => {
           transition={{ duration: 1 }}
           style={{ position: 'absolute', left: '20px', top: '350px', fontFamily: 'Boris', fontSize: '24px', color: '#000', zIndex: 10 }}
         >
-          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi 🎮</h2>
+          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi（ ´_⊃｀）</h2>
           <ul>
-            <li>1. Tìm và bấm vào các điểm khác biệt <br /> giữa hai hình ảnh.</li>
-            <li>2. Hoàn thành trò chơi trước khi hết giờ.</li>
+            <li>1. Tìm và ấn những điểm khác biệt để hoàn <br/> thành trò chơi.</li>
+            <li>2. Chỉ có duy nhất 3 mạng để ấn sai.</li>
+            <li>3. Hoàn thành trò chơi trước khi hết giờ.</li>
           </ul>
         </motion.div>
       )}
@@ -155,8 +156,8 @@ const Island1 = () => {
           style={{ position: 'absolute', top: '120px', left: '75%', transform: 'translateX(-50%)', fontFamily: 'Boris', fontSize: '30px', zIndex: 10 }}
         >
           <p>Time: {timeLeft}s</p>
-          <p>{foundDifferences.length}/8 found</p>
-          <p>{lives}/3 ♥</p> {/* Display remaining lives */}
+          <p>{foundDifferences.length}/8🔍</p>
+          <p>{lives}/3❤️‍🔥</p> {/* Display remaining lives */}
         </motion.div>
       )}
 
@@ -179,6 +180,7 @@ const Island1 = () => {
                   height: 'auto', 
                   filter: !gameStarted ? 'blur(5px) brightness(20%)' : 'none', // Darkening effect with blur
                   opacity: !gameStarted ? 0.7 : 1,
+                  transition: 'opacity 0.5s ease',
                 }} 
                 onClick={handleClick} 
               />
@@ -229,6 +231,7 @@ const Island1 = () => {
                   height: 'auto',
                   filter: !gameStarted ? 'blur(5px) brightness(20%)' : 'none', // Darkening effect with blur
                   opacity: !gameStarted ? 0.7 : 1,
+                  transition: 'opacity 0.5s ease',
                 }}
                 onClick={handleClick}
               />

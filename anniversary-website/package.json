@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "anniversary-website": "file:",
     "framer-motion": "^11.5.4",
+    "jquery": "^3.7.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
