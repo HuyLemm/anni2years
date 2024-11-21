@@ -13,8 +13,8 @@ import Island1 from './pages/islandPage/island1/island1';
 import Island2 from './pages/islandPage/island2/island2';
 import Island3 from './pages/islandPage/island3/island3';
 import Island4 from './pages/islandPage/island4/island4';
-import Island5 from './pages/islandPage/island5';
-import Island6 from './pages/islandPage/island6';
+import Island5 from './pages/islandPage/island5/island5';
+import Island6 from './pages/islandPage/island6/island6';
 
 function App() {
   return (
