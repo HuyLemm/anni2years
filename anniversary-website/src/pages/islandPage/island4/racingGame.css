@@ -6,45 +6,46 @@ body {
   font-family: sans-serif;
 }
 
-#container{
+#container {
   position: relative;
   height: 85vh;
   width: 30%;
   left: 35%;
-  margin-top: 20px;;
+  margin-top: 20px;
   background-color: #292929;
   overflow: hidden;
   border-radius: 20px;
 }
-.line{
+.line {
   position: absolute;
   height: 150px;
   width: 4%;
   margin-left: 48%;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
-#line_1{
+#line_1 {
   top: -150px;
 }
-#line_2{
+#line_2 {
   top: 150px;
 }
-#line_3{
+#line_3 {
   top: 450px;
 }
-.car{
+
+.car {
   position: absolute;
   height: 60px;
   width: 40px;
   border-radius: 5px;
   box-shadow: 0px 1px 8px 0px black;
 }
-#car{
+#car {
   bottom: 8%;
   left: 60%;
-  background-color: #F0C1E1;
+  background-color: #f0c1e1;
 }
-.f_glass{
+.f_glass {
   position: absolute;
   height: 20%;
   width: 60%;
@@ -53,7 +54,7 @@ body {
   border-radius: 0px 0px 5px 5px;
   background-color: #484848;
 }
-.b_glass{
+.b_glass {
   position: absolute;
   height: 20%;
   width: 60%;
@@ -62,7 +63,7 @@ body {
   border-radius: 5px 5px 0px 0px;
   background-color: #484848;
 }
-.f_light_l{
+.f_light_l {
   position: absolute;
   height: 10%;
   width: 20%;
@@ -71,7 +72,7 @@ body {
   border-radius: 5px 5px 0px 0px;
   background-color: #efefef;
 }
-.f_light_r{
+.f_light_r {
   position: absolute;
   height: 10%;
   width: 20%;
@@ -80,7 +81,7 @@ body {
   border-radius: 5px 5px 0px 0px;
   background-color: #efefef;
 }
-.f_tyre_l{
+.f_tyre_l {
   position: absolute;
   height: 20%;
   width: 10%;
@@ -89,7 +90,7 @@ body {
   left: -10%;
   border-radius: 5px 0px 0px 5px;
 }
-.f_tyre_r{
+.f_tyre_r {
   position: absolute;
   height: 20%;
   width: 10%;
@@ -98,7 +99,7 @@ body {
   left: 100%;
   border-radius: 0px 5px 5px 0px;
 }
-.b_tyre_l{
+.b_tyre_l {
   position: absolute;
   height: 20%;
   width: 10%;
@@ -107,7 +108,7 @@ body {
   left: -10%;
   border-radius: 5px 0px 0px 5px;
 }
-.b_tyre_r{
+.b_tyre_r {
   position: absolute;
   height: 20%;
   width: 10%;
@@ -116,17 +117,17 @@ body {
   left: 100%;
   border-radius: 0px 5px 5px 0px;
 }
-#car_1{
+#car_1 {
   top: -100px;
   left: 60%;
   background-color: #26c5ff;
 }
-#car_2{
+#car_2 {
   top: -200px;
   left: 40%;
   background-color: #26c5ff;
 }
-#car_3{
+#car_3 {
   top: -350px;
   left: 50%;
   background-color: #26c5ff;
@@ -151,10 +152,10 @@ body {
   font-size: 30px;
   margin-top: 30%;
 }
-.small_text{
+.small_text {
   font-size: 15px;
 }
-#score_div{
+#score_div {
   position: absolute;
   margin-top: 20%;
   margin-left: 10%;
@@ -164,13 +165,13 @@ body {
   padding: 10px;
   box-shadow: 4px 4px 0px 1px #808080;
 }
-#help{
-text-align: center;
+#help {
+  text-align: center;
 }
-#donate{
+#donate {
   position: absolute;
   right: 10px;
   top: 25px;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   padding: 12px;
 }

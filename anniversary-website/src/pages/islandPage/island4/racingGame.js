@@ -127,7 +127,11 @@ const RacingGame = ({ gameStarted, onGameOver, gameComplete }) => {
     }
 
     function right() {
-      if (!game_over && !gameComplete && parseInt(car.css("left")) < container_width - car_width) {
+      if (
+        !game_over &&
+        !gameComplete &&
+        parseInt(car.css("left")) < container_width - car_width
+      ) {
         car.css("left", parseInt(car.css("left")) + 5);
         move_right = requestAnimationFrame(right);
       }
@@ -141,7 +145,11 @@ const RacingGame = ({ gameStarted, onGameOver, gameComplete }) => {
     }
 
     function down() {
-      if (!game_over && !gameComplete && parseInt(car.css("top")) < container_height - car_height) {
+      if (
+        !game_over &&
+        !gameComplete &&
+        parseInt(car.css("top")) < container_height - car_height
+      ) {
         car.css("top", parseInt(car.css("top")) + 5);
         move_down = requestAnimationFrame(down);
       }
@@ -153,7 +161,11 @@ const RacingGame = ({ gameStarted, onGameOver, gameComplete }) => {
     function repeat() {
       if (game_over || gameComplete) return; // Stop animation if game over or complete
 
-      if (collision(car, car_1) || collision(car, car_2) || collision(car, car_3)) {
+      if (
+        collision(car, car_1) ||
+        collision(car, car_2) ||
+        collision(car, car_3)
+      ) {
         stop_the_game();
         onGameOver && onGameOver();
         return;
@@ -174,7 +186,9 @@ const RacingGame = ({ gameStarted, onGameOver, gameComplete }) => {
       let car_current_top = parseInt(car.css("top"));
       if (car_current_top > container_height) {
         car_current_top = -200;
-        const car_left = parseInt(Math.random() * (container_width - car_width));
+        const car_left = parseInt(
+          Math.random() * (container_width - car_width)
+        );
         car.css("left", car_left);
       }
       car.css("top", car_current_top + speed);

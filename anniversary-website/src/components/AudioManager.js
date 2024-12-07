@@ -1,4 +1,4 @@
-import React, { createContext, useRef } from 'react';
+import React, { createContext, useRef } from "react";
 
 const AudioManagerContext = createContext();
 
@@ -8,8 +8,9 @@ export const AudioManagerProvider = ({ children }) => {
   const playAudio = (audioFile) => {
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.currentTime = 0;  // Reset the audio
+      audioRef.current.currentTime = 0; // Reset the audio
     }
+
     const newAudio = new Audio(audioFile);
     audioRef.current = newAudio;
     newAudio.volume = 0.4;

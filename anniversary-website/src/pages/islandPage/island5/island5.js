@@ -36,11 +36,13 @@ const Island5 = () => {
         const ctx = canvas.getContext("2d");
 
         // Load hình ảnh
-        const birdImages = [birdDownFlap, birdMidFlap, birdUpFlap].map((src) => {
-          const img = new Image();
-          img.src = src;
-          return img;
-        });
+        const birdImages = [birdDownFlap, birdMidFlap, birdUpFlap].map(
+          (src) => {
+            const img = new Image();
+            img.src = src;
+            return img;
+          }
+        );
 
         const bg = new Image();
         bg.src = background;
@@ -70,132 +72,131 @@ const Island5 = () => {
   }, [showGameBoard]);
 
   // Game loop
-    useEffect(() => {
-        if (gameRunning && !gameOver && !gameComplete) {
-            const canvas = document.getElementById("gameCanvas");
-            const ctx = canvas.getContext("2d");
+  useEffect(() => {
+    if (gameRunning && !gameOver && !gameComplete) {
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
 
-            const birdImages = [birdDownFlap, birdMidFlap, birdUpFlap].map((src) => {
-                const img = new Image();
-                img.src = src;
-                return img;
-            });
+      const birdImages = [birdDownFlap, birdMidFlap, birdUpFlap].map((src) => {
+        const img = new Image();
+        img.src = src;
+        return img;
+      });
 
-            const bg = new Image();
-            bg.src = background;
+      const bg = new Image();
+      bg.src = background;
 
-            const pipeTop = new Image();
-            pipeTop.src = pipeGreen;
+      const pipeTop = new Image();
+      pipeTop.src = pipeGreen;
 
-            const pipeBottom = new Image();
-            pipeBottom.src = pipeGreen;
+      const pipeBottom = new Image();
+      pipeBottom.src = pipeGreen;
 
-            let birdY = canvas.height / 2;
-            let gravity = 0.1;
-            let lift = -4; // Lực đẩy khi nhấn phím lên
-            let velocity = 0;
-            let pipes = [];
-            let frame = 0;
-            let animationFrameId; // Biến để lưu id của requestAnimationFrame
+      let birdY = canvas.height / 2;
+      let gravity = 0.1;
+      let lift = -4; // Lực đẩy khi nhấn phím lên
+      let velocity = 0;
+      let pipes = [];
+      let frame = 0;
+      let animationFrameId; // Biến để lưu id của requestAnimationFrame
 
-            const spawnPipe = () => {
-                const gap = 300; // Khoảng cách giữa ống trên và dưới
-                const pipeHeight = Math.floor(Math.random() * (canvas.height / 2));
-                pipes.push({
-                    x: canvas.width,
-                    top: pipeHeight,
-                    bottom: pipeHeight + gap,
-                    width: 50,
-                });
-            };
+      const spawnPipe = () => {
+        const gap = 300; // Khoảng cách giữa ống trên và dưới
+        const pipeHeight = Math.floor(Math.random() * (canvas.height / 2));
+        pipes.push({
+          x: canvas.width,
+          top: pipeHeight,
+          bottom: pipeHeight + gap,
+          width: 50,
+        });
+      };
 
-            // Lắng nghe sự kiện phím
-            const handleKeyPress = (event) => {
-                if (event.code === "ArrowUp" || event.code === "Space") { // Khi nhấn phím mũi tên lên
-                    velocity = lift; // Áp dụng lực đẩy
-                }
-            };
-
-            // Thêm trình lắng nghe khi hiệu ứng bắt đầu
-            window.addEventListener("keydown", handleKeyPress);
-
-            const gameLoop = () => {
-                // Kiểm tra trạng thái game (dừng khi thắng/thua)
-                if (gameOver || gameComplete) {
-                  cancelAnimationFrame(animationFrameId); // Dừng hoàn toàn game loop
-                  return; // Dừng game loop
-                }
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-
-                // Vẽ và di chuyển ống
-                pipes.forEach((pipe, index) => {
-                    ctx.drawImage(pipeTop, pipe.x, pipe.top - pipeTop.height);
-                    ctx.drawImage(pipeBottom, pipe.x, pipe.bottom);
-                    pipe.x -= 2;
-
-                    // Phát hiện va chạm
-                    if (
-                        (birdY < pipe.top || birdY > pipe.bottom) &&
-                        pipe.x < 50 &&
-                        pipe.x + pipe.width > 0
-                    ) {
-                        setGameOver(true);
-                        setGameRunning(false);
-                    }
-
-                    if (pipe.x + pipe.width < 0) {
-                        pipes.splice(index, 1); // Xóa ống khi ra khỏi màn hình
-                        setScore((prev) => {
-                            const newScore = prev + 1;
-                            if (newScore >= 20) {
-                                setGameComplete(true); // Điều kiện chiến thắng
-                                setGameRunning(false);
-                            }
-                            return newScore;
-                        });
-                    }
-                });
-
-                // Tạo ống mới mỗi 100 frame
-                if (frame % 100 === 0) {
-                    spawnPipe();
-                }
-
-                // Di chuyển chim
-                velocity += gravity; // Tăng vận tốc rơi theo trọng lực
-                birdY += velocity;
-
-                if (birdY > canvas.height - 20 || birdY < 0) {
-                    setGameOver(true);
-                    setGameRunning(false);
-                }
-
-                ctx.drawImage(
-                    birdImages[Math.floor(frame / 10) % 3],
-                    25,
-                    birdY,
-                    40,
-                    40
-                );
-
-                frame++;
-                animationFrameId = requestAnimationFrame(gameLoop); // Lưu lại id của requestAnimationFrame
-            };
-
-            spawnPipe(); // Tạo ống đầu tiên
-            gameLoop();
-
-            // Xóa trình lắng nghe khi kết thúc hiệu ứng
-            return () => {
-                window.removeEventListener("keydown", handleKeyPress);
-                cancelAnimationFrame(animationFrameId); // Đảm bảo dừng hoàn toàn
-            };
+      // Lắng nghe sự kiện phím
+      const handleKeyPress = (event) => {
+        if (event.code === "ArrowUp" || event.code === "Space") {
+          // Khi nhấn phím mũi tên lên
+          velocity = lift; // Áp dụng lực đẩy
         }
-    }, [gameRunning, gameOver, gameComplete]);
+      };
 
+      // Thêm trình lắng nghe khi hiệu ứng bắt đầu
+      window.addEventListener("keydown", handleKeyPress);
 
+      const gameLoop = () => {
+        // Kiểm tra trạng thái game (dừng khi thắng/thua)
+        if (gameOver || gameComplete) {
+          cancelAnimationFrame(animationFrameId); // Dừng hoàn toàn game loop
+          return; // Dừng game loop
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        // Vẽ và di chuyển ống
+        pipes.forEach((pipe, index) => {
+          ctx.drawImage(pipeTop, pipe.x, pipe.top - pipeTop.height);
+          ctx.drawImage(pipeBottom, pipe.x, pipe.bottom);
+          pipe.x -= 2;
+
+          // Phát hiện va chạm
+          if (
+            (birdY < pipe.top || birdY > pipe.bottom) &&
+            pipe.x < 50 &&
+            pipe.x + pipe.width > 0
+          ) {
+            setGameOver(true);
+            setGameRunning(false);
+          }
+
+          if (pipe.x + pipe.width < 0) {
+            pipes.splice(index, 1); // Xóa ống khi ra khỏi màn hình
+            setScore((prev) => {
+              const newScore = prev + 1;
+              if (newScore >= 20) {
+                setGameComplete(true); // Điều kiện chiến thắng
+                setGameRunning(false);
+              }
+              return newScore;
+            });
+          }
+        });
+
+        // Tạo ống mới mỗi 100 frame
+        if (frame % 100 === 0) {
+          spawnPipe();
+        }
+
+        // Di chuyển chim
+        velocity += gravity; // Tăng vận tốc rơi theo trọng lực
+        birdY += velocity;
+
+        if (birdY > canvas.height - 20 || birdY < 0) {
+          setGameOver(true);
+          setGameRunning(false);
+        }
+
+        ctx.drawImage(
+          birdImages[Math.floor(frame / 10) % 3],
+          25,
+          birdY,
+          40,
+          40
+        );
+
+        frame++;
+        animationFrameId = requestAnimationFrame(gameLoop); // Lưu lại id của requestAnimationFrame
+      };
+
+      spawnPipe(); // Tạo ống đầu tiên
+      gameLoop();
+
+      // Xóa trình lắng nghe khi kết thúc hiệu ứng
+      return () => {
+        window.removeEventListener("keydown", handleKeyPress);
+        cancelAnimationFrame(animationFrameId); // Đảm bảo dừng hoàn toàn
+      };
+    }
+  }, [gameRunning, gameOver, gameComplete]);
 
   // Bắt đầu game khi nhấn phím
   useEffect(() => {
@@ -265,7 +266,10 @@ const Island5 = () => {
             Luật chơi ٩(ˊᗜˋ*)و ♡
           </h2>
           <ul>
-            <li>1. Nhấn phím Space hoặc ↑ để giữ chim <br/>bay lên.</li>
+            <li>
+              1. Nhấn phím Space hoặc ↑ để giữ chim <br />
+              bay lên.
+            </li>
             <li>2. Tránh các chướng ngại vật (ống nước).</li>
             <li>3. Điểm sẽ tăng khi bạn vượt qua ống.</li>
             <li>4. Được 20 điểm để chiến thắng trò chơi.</li>
@@ -345,23 +349,27 @@ const Island5 = () => {
           transition={{ duration: 1 }}
           className="win-message"
           style={{
-            marginLeft: '50px',
-            position: 'absolute',
-            left: '72%',
-            top: '25%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
+            marginLeft: "50px",
+            position: "absolute",
+            left: "72%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
           }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
           <h2
             style={{
-              position: 'absolute',
-              marginTop: '-290px',
-              marginLeft: '100px',
-              fontFamily: 'Boris',
-              fontSize: '30px',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-290px",
+              marginLeft: "100px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
             }}
           >
             Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi!🎉🥳
@@ -369,17 +377,17 @@ const Island5 = () => {
           <button
             onClick={() => window.location.reload()}
             style={{
-              position: 'absolute',
-              marginTop: '-150px',
-              marginLeft: '-25px',
-              fontFamily: 'Boris',
-              padding: '1px 10px',
-              fontSize: '25px',
-              borderRadius: '20px',
-              backgroundColor: 'transparent',
-              border: '4px solid #be185d',
-              cursor: 'pointer',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-150px",
+              marginLeft: "-25px",
+              fontFamily: "Boris",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
             }}
           >
             ➜
@@ -395,23 +403,27 @@ const Island5 = () => {
           transition={{ duration: 1 }}
           className="lose-message"
           style={{
-            marginLeft: '50px',
-            position: 'absolute',
-            left: '72%',
-            top: '25%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
+            marginLeft: "50px",
+            position: "absolute",
+            left: "72%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
           }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
           <h2
             style={{
-              position: 'absolute',
-              marginTop: '-290px',
-              marginLeft: '100px',
-              fontFamily: 'Boris',
-              fontSize: '30px',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-290px",
+              marginLeft: "100px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
             }}
           >
             Oh nooo em đã <br /> lái đụng chim thua ùi <br /> Thử lại nho!
@@ -419,17 +431,17 @@ const Island5 = () => {
           <button
             onClick={() => window.location.reload()}
             style={{
-              position: 'absolute',
-              marginTop: '-150px',
-              marginLeft: '-25px',
-              fontFamily: 'Boris',
-              padding: '1px 10px',
-              fontSize: '25px',
-              borderRadius: '20px',
-              backgroundColor: 'transparent',
-              border: '4px solid #be185d',
-              cursor: 'pointer',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-150px",
+              marginLeft: "-25px",
+              fontFamily: "Boris",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
             }}
           >
             ↻

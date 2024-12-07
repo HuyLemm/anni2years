@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import RacingGame from './racingGame'; // Import Racing Game Component
-import start from '../../../assets/images/islandPage/island4/start.png';
-import border from '../../../assets/images/islandPage/island4/border.png';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import RacingGame from "./racingGame"; // Import Racing Game Component
+import start from "../../../assets/images/islandPage/island4/start.png";
+import border from "../../../assets/images/islandPage/island4/border.png";
 
 const Island4 = () => {
   const [showTitle, setShowTitle] = useState(false);
@@ -48,7 +48,10 @@ const Island4 = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center relative text-pink-700" style={{ overflow: 'hidden' }}>
+    <div
+      className="h-screen flex items-center justify-center relative text-pink-700"
+      style={{ overflow: "hidden" }}
+    >
       {/* Hiển thị tiêu đề */}
       {showTitle && (
         <motion.h1
@@ -56,11 +59,11 @@ const Island4 = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           style={{
-            fontFamily: 'Boris',
-            position: 'absolute',
-            fontSize: '50px',
-            top: '2%',
-            textAlign: 'center',
+            fontFamily: "Boris",
+            position: "absolute",
+            fontSize: "50px",
+            top: "2%",
+            textAlign: "center",
           }}
         >
           Trò chơi vượt chướng ngại vật 🚗💨
@@ -74,20 +77,26 @@ const Island4 = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           style={{
-            position: 'absolute',
-            left: '20px',
-            top: '350px',
-            fontFamily: 'Boris',
-            fontSize: '24px',
-            color: '#000',
-            textAlign: 'left',
+            position: "absolute",
+            left: "20px",
+            top: "350px",
+            fontFamily: "Boris",
+            fontSize: "24px",
+            color: "#000",
+            textAlign: "left",
           }}
         >
-          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi ₓ˚. ୭ ˚○◦˚.˚◦○˚ ୧ .˚ₓ</h2>
+          <h2 style={{ marginBottom: "20px", fontSize: "30px" }}>
+            Luật chơi ₓ˚. ୭ ˚○◦˚.˚◦○˚ ୧ .˚ₓ
+          </h2>
           <ul>
             <li>1. Điều khiển nhân vật tránh các xe.</li>
-            <li>2. Sử dụng phím mũi tên hoặc W/A/S/D <br /> để di chuyển né.</li>
-            <li>3. Điểm sẽ tăng khi chạy và càng về sau <br /> tốc độ càng nhanh.</li>
+            <li>
+              2. Sử dụng phím mũi tên hoặc W/A/S/D <br /> để di chuyển né.
+            </li>
+            <li>
+              3. Điểm sẽ tăng khi chạy và càng về sau <br /> tốc độ càng nhanh.
+            </li>
             <li>4. Hoàn thành trò chơi khi tích đủ 100 điểm</li>
           </ul>
         </motion.div>
@@ -97,11 +106,14 @@ const Island4 = () => {
       {showGameBoard && (
         <div
           style={{
-            marginTop: '50px',
-            width: '100%',
-            filter: !gameStarted && !gameComplete && !gameOver ? 'blur(5px) brightness(20%)' : 'none', // Darkening effect with blur
+            marginTop: "50px",
+            width: "100%",
+            filter:
+              !gameStarted && !gameComplete && !gameOver
+                ? "blur(5px) brightness(20%)"
+                : "none", // Darkening effect with blur
             opacity: !gameStarted && !gameComplete && !gameOver ? 0.7 : 1, // Làm mờ nếu game chưa bắt đầu
-            transition: 'opacity 0.5s ease',
+            transition: "opacity 0.5s ease",
           }}
         >
           <RacingGame
@@ -118,9 +130,20 @@ const Island4 = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ position: 'absolute', top: '120px', left: '67%', transform: 'translateX(-50%)', zIndex: 10 }}
+          style={{
+            position: "absolute",
+            top: "120px",
+            left: "67%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+          }}
         >
-          <img src={start} alt="Start" style={{ width: '160px', cursor: 'pointer' }} onClick={handleStart} />
+          <img
+            src={start}
+            alt="Start"
+            style={{ width: "160px", cursor: "pointer" }}
+            onClick={handleStart}
+          />
         </motion.div>
       )}
 
@@ -128,14 +151,16 @@ const Island4 = () => {
       {score > 0 && (
         <div
           style={{
-            position: 'absolute',
-            top: '120px',
-            left: '70%',
-            transform: 'translateX(-50%)',
+            position: "absolute",
+            top: "120px",
+            left: "70%",
+            transform: "translateX(-50%)",
             zIndex: 10,
           }}
         >
-          <h2 style={{ fontFamily: 'Boris', fontSize: '30px' }}>Score: {score}</h2>
+          <h2 style={{ fontFamily: "Boris", fontSize: "30px" }}>
+            Score: {score}
+          </h2>
         </div>
       )}
 
@@ -147,23 +172,27 @@ const Island4 = () => {
           transition={{ duration: 1 }}
           className="win-message"
           style={{
-            marginLeft: '50px',
-            position: 'absolute',
-            left: '72%',
-            top: '25%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
+            marginLeft: "50px",
+            position: "absolute",
+            left: "72%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
           }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
           <h2
             style={{
-              position: 'absolute',
-              marginTop: '-290px',
-              marginLeft: '100px',
-              fontFamily: 'Boris',
-              fontSize: '30px',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-290px",
+              marginLeft: "100px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
             }}
           >
             Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi!🎉🥳
@@ -171,17 +200,17 @@ const Island4 = () => {
           <button
             onClick={() => window.location.reload()}
             style={{
-              position: 'absolute',
-              marginTop: '-150px',
-              marginLeft: '-25px',
-              fontFamily: 'Boris',
-              padding: '1px 10px',
-              fontSize: '25px',
-              borderRadius: '20px',
-              backgroundColor: 'transparent',
-              border: '4px solid #be185d',
-              cursor: 'pointer',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-150px",
+              marginLeft: "-25px",
+              fontFamily: "Boris",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
             }}
           >
             ➜
@@ -197,23 +226,27 @@ const Island4 = () => {
           transition={{ duration: 1 }}
           className="lose-message"
           style={{
-            marginLeft: '50px',
-            position: 'absolute',
-            left: '69%',
-            top: '25%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
+            marginLeft: "50px",
+            position: "absolute",
+            left: "69%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
           }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
           <h2
             style={{
-              position: 'absolute',
-              marginTop: '-290px',
-              marginLeft: '100px',
-              fontFamily: 'Boris',
-              fontSize: '30px',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-290px",
+              marginLeft: "100px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
             }}
           >
             Oh nooo em đã <br /> bị đụng xe thua ùi <br /> Thử lại nho!
@@ -221,17 +254,17 @@ const Island4 = () => {
           <button
             onClick={() => window.location.reload()}
             style={{
-              position: 'absolute',
-              marginTop: '-150px',
-              marginLeft: '-25px',
-              fontFamily: 'Boris',
-              padding: '1px 10px',
-              fontSize: '25px',
-              borderRadius: '20px',
-              backgroundColor: 'transparent',
-              border: '4px solid #be185d',
-              cursor: 'pointer',
-              zIndex: '3',
+              position: "absolute",
+              marginTop: "-150px",
+              marginLeft: "-25px",
+              fontFamily: "Boris",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
             }}
           >
             ↻

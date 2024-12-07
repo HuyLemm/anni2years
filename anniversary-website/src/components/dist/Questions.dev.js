@@ -43,7 +43,7 @@ var loves = [{
 }, {
   image: _teddy["default"],
   value: 5,
-  concept: "teddy \ (^ ヮ ^) /",
+  concept: "teddy  (^ ヮ ^) /",
   sent: ["Anh muốn ôm em bé như ôm chú Teddy này mỗi ngày lun ó! 🧸💑", "Teddy là món quà nhắc nhớ rằng anh luôn bên cạnh em bé á! 🎁💞", "Chú gấu này giống như tình yêu của anh, luôn ấm áp cho em bé! 🧸💖", "Mỗi lần nhìn Teddy, nhớ đến cái ôm ấm áp từ anh nha bé! 🥰🤗", "Teddy nhỏ xinh mà chứa bao yêu thương anh dành cho em bé á! 🧸💌", "Anh muốn Teddy này là người bạn của em bé khi anh không có ở đó ó! 🐻💓", "Ôm Teddy này như anh đang ôm em bé trong vòng tay vậy đó! 💞🤗"]
 }, {
   image: _rose["default"],

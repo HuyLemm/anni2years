@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 // Import the two images for spot-the-difference game
-import originalImage from '../../../assets/images/islandPage/island1/main.png';
-import alteredImage from '../../../assets/images/islandPage/island1/alter.png';
-import circleImage from '../../../assets/images/islandPage/island1/circle.png'; // Circle image for marking differences
-import start from '../../../assets/images/islandPage/island1/start.png';
-import border from '../../../assets/images/islandPage/island1/border.png';
-import wrong from '../../../assets/images/islandPage/island1/wrong.png'; // Wrong image
+import originalImage from "../../../assets/images/islandPage/island1/main.png";
+import alteredImage from "../../../assets/images/islandPage/island1/alter.png";
+import circleImage from "../../../assets/images/islandPage/island1/circle.png"; // Circle image for marking differences
+import start from "../../../assets/images/islandPage/island1/start.png";
+import border from "../../../assets/images/islandPage/island1/border.png";
+import wrong from "../../../assets/images/islandPage/island1/wrong.png"; // Wrong image
 
 // Define the coordinates of the 7 circles (differences)
 const differences = [
@@ -76,7 +76,10 @@ const Island1 = () => {
       const distance = Math.sqrt(
         (offsetX - (difference.x + 30)) ** 2 + (offsetY - difference.y) ** 2
       );
-      if (distance <= (difference.radius + bufferSize) && !foundDifferences.includes(index)) {
+      if (
+        distance <= difference.radius + bufferSize &&
+        !foundDifferences.includes(index)
+      ) {
         setFoundDifferences([...foundDifferences, index]);
         found = true; // Correct spot was clicked
       }
@@ -111,7 +114,15 @@ const Island1 = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ fontFamily: 'Boris', position: 'absolute', fontSize: '50px', marginTop: '20px', left: '34%', top: '0%', transform: 'translateX(-50%)' }}
+          style={{
+            fontFamily: "Boris",
+            position: "absolute",
+            fontSize: "50px",
+            marginTop: "20px",
+            left: "34%",
+            top: "0%",
+            transform: "translateX(-50%)",
+          }}
         >
           Trò chơi tìm điểm khác biệt🕵️‍♀️
         </motion.h1>
@@ -123,11 +134,23 @@ const Island1 = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
-          style={{ position: 'absolute', left: '20px', top: '350px', fontFamily: 'Boris', fontSize: '24px', color: '#000', zIndex: 10 }}
+          style={{
+            position: "absolute",
+            left: "20px",
+            top: "350px",
+            fontFamily: "Boris",
+            fontSize: "24px",
+            color: "#000",
+            zIndex: 10,
+          }}
         >
-          <h2 style={{ marginBottom: '20px', fontSize: '30px' }}>Luật chơi（ ´_⊃｀）</h2>
+          <h2 style={{ marginBottom: "20px", fontSize: "30px" }}>
+            Luật chơi（ ´_⊃｀）
+          </h2>
           <ul>
-            <li>1. Tìm và ấn những điểm khác biệt để hoàn <br/> thành trò chơi.</li>
+            <li>
+              1. Tìm và ấn những điểm khác biệt để hoàn <br /> thành trò chơi.
+            </li>
             <li>2. Chỉ có duy nhất 3 mạng để ấn sai.</li>
             <li>3. Hoàn thành trò chơi trước khi hết giờ.</li>
           </ul>
@@ -140,9 +163,20 @@ const Island1 = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ position: 'absolute', top: '120px', left: '75%', transform: 'translateX(-50%)', zIndex: 10 }}
+          style={{
+            position: "absolute",
+            top: "120px",
+            left: "75%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+          }}
         >
-          <img src={start} alt="Start" style={{ width: '160px', cursor: 'pointer' }} onClick={handleStart} />
+          <img
+            src={start}
+            alt="Start"
+            style={{ width: "160px", cursor: "pointer" }}
+            onClick={handleStart}
+          />
         </motion.div>
       )}
 
@@ -153,7 +187,15 @@ const Island1 = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ position: 'absolute', top: '120px', left: '75%', transform: 'translateX(-50%)', fontFamily: 'Boris', fontSize: '30px', zIndex: 10 }}
+          style={{
+            position: "absolute",
+            top: "120px",
+            left: "75%",
+            transform: "translateX(-50%)",
+            fontFamily: "Boris",
+            fontSize: "30px",
+            zIndex: 10,
+          }}
         >
           <p>Time: {timeLeft}s</p>
           <p>{foundDifferences.length}/8🔍</p>
@@ -167,71 +209,20 @@ const Island1 = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          style={{ marginTop: '20px', marginLeft: '50px' }}
+          style={{ marginTop: "20px", marginLeft: "50px" }}
         >
-          <div style={{ display: 'flex', gap: '20px' }}>
+          <div style={{ display: "flex", gap: "20px" }}>
             {/* Show original image with circles */}
-            <div style={{ position: 'relative', cursor: 'pointer' }}>
-              <img 
-                src={originalImage} 
-                alt="Original" 
-                style={{ 
-                  width: '420px', 
-                  height: 'auto', 
-                  filter: !gameStarted ? 'blur(5px) brightness(20%)' : 'none', // Darkening effect with blur
-                  opacity: !gameStarted ? 0.7 : 1,
-                  transition: 'opacity 0.5s ease',
-                }} 
-                onClick={handleClick} 
-              />
-              {foundDifferences.map((differenceIndex) => (
-                <motion.img
-                  key={differenceIndex}
-                  src={circleImage}
-                  alt="circle"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  style={{
-                    position: 'absolute',
-                    top: `${differences[differenceIndex].y}px`,
-                    left: `${differences[differenceIndex].x}px`,
-                    width: `${differences[differenceIndex].radius * 2}px`,
-                    height: `${differences[differenceIndex].radius * 2}px`,
-                    zIndex: 10,
-                  }}
-                />
-              ))}
-              {showWrongImage && (
-                <motion.img
-                  src={wrong}
-                  alt="Wrong"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ 
-                    position: 'absolute', 
-                    top: `${wrongPosition.y}px`, 
-                    left: `${wrongPosition.x}px`, 
-                    width: '30px', 
-                    height: '30px', 
-                    zIndex: 10 
-                  }}
-                />
-              )}
-            </div>
-
-            {/* Show altered image with circles */}
-            <div style={{ position: 'relative', cursor: 'pointer' }}>
+            <div style={{ position: "relative", cursor: "pointer" }}>
               <img
-                src={alteredImage}
-                alt="Altered"
-                style={{ 
-                  width: '420px', 
-                  height: 'auto',
-                  filter: !gameStarted ? 'blur(5px) brightness(20%)' : 'none', // Darkening effect with blur
+                src={originalImage}
+                alt="Original"
+                style={{
+                  width: "420px",
+                  height: "auto",
+                  filter: !gameStarted ? "blur(5px) brightness(20%)" : "none", // Darkening effect with blur
                   opacity: !gameStarted ? 0.7 : 1,
-                  transition: 'opacity 0.5s ease',
+                  transition: "opacity 0.5s ease",
                 }}
                 onClick={handleClick}
               />
@@ -244,7 +235,7 @@ const Island1 = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: `${differences[differenceIndex].y}px`,
                     left: `${differences[differenceIndex].x}px`,
                     width: `${differences[differenceIndex].radius * 2}px`,
@@ -260,13 +251,64 @@ const Island1 = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  style={{ 
-                    position: 'absolute', 
-                    top: `${wrongPosition.y -12}px`, 
-                    left: `${wrongPosition.x - 17}px`, 
-                    width: '30px', 
-                    height: '30px', 
-                    zIndex: 10 
+                  style={{
+                    position: "absolute",
+                    top: `${wrongPosition.y}px`,
+                    left: `${wrongPosition.x}px`,
+                    width: "30px",
+                    height: "30px",
+                    zIndex: 10,
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Show altered image with circles */}
+            <div style={{ position: "relative", cursor: "pointer" }}>
+              <img
+                src={alteredImage}
+                alt="Altered"
+                style={{
+                  width: "420px",
+                  height: "auto",
+                  filter: !gameStarted ? "blur(5px) brightness(20%)" : "none", // Darkening effect with blur
+                  opacity: !gameStarted ? 0.7 : 1,
+                  transition: "opacity 0.5s ease",
+                }}
+                onClick={handleClick}
+              />
+              {foundDifferences.map((differenceIndex) => (
+                <motion.img
+                  key={differenceIndex}
+                  src={circleImage}
+                  alt="circle"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    position: "absolute",
+                    top: `${differences[differenceIndex].y}px`,
+                    left: `${differences[differenceIndex].x}px`,
+                    width: `${differences[differenceIndex].radius * 2}px`,
+                    height: `${differences[differenceIndex].radius * 2}px`,
+                    zIndex: 10,
+                  }}
+                />
+              ))}
+              {showWrongImage && (
+                <motion.img
+                  src={wrong}
+                  alt="Wrong"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    position: "absolute",
+                    top: `${wrongPosition.y - 12}px`,
+                    left: `${wrongPosition.x - 17}px`,
+                    width: "30px",
+                    height: "30px",
+                    zIndex: 10,
                   }}
                 />
               )}
@@ -282,13 +324,48 @@ const Island1 = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
           className="win-message"
-          style={{ marginLeft: '50px', position: 'absolute', left: '72%', top: '25%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}
+          style={{
+            marginLeft: "50px",
+            position: "absolute",
+            left: "72%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+          }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
-          <h2 style={{ postion: 'absolute', marginTop: '-300px', fontFamily: 'Boris', fontSize: '30px', zIndex: '3' }}>
-            Chúc mừng em đã <br/> hoàn thành xuất sắc <br/> trò chơi! 🎉🥳
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
+          <h2
+            style={{
+              postion: "absolute",
+              marginTop: "-300px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
+            }}
+          >
+            Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi! 🎉🥳
           </h2>
-          <button onClick={() => navigate('/prize1')} style={{ fontFamily: 'Boris', margin: '10px', padding: '1px 10px', fontSize: '25px', borderRadius: '20px', backgroundColor: 'transparent', border: '4px solid #be185d', cursor: 'pointer', zIndex: '3' }}> ➜</button>
+          <button
+            onClick={() => navigate("/prize1")}
+            style={{
+              fontFamily: "Boris",
+              margin: "10px",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
+            }}
+          >
+            {" "}
+            ➜
+          </button>
         </motion.div>
       )}
 
@@ -299,13 +376,48 @@ const Island1 = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
           className="lose-message"
-          style={{ marginLeft: '50px', position: 'absolute', left: '72%', top: '25%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}
+          style={{
+            marginLeft: "50px",
+            position: "absolute",
+            left: "72%",
+            top: "25%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+          }}
         >
-          <img src={border} alt="border" style={{ width: '450px', zIndex: '2' }} />
-          <h2 style={{ postion: 'absolute', marginTop: '-300px', fontFamily: 'Boris', fontSize: '30px', zIndex: '3'}}>
-            Oh nooo em đã <br/> hong kịp hoàn thành ùi! <br/> Thử lại nho!
+          <img
+            src={border}
+            alt="border"
+            style={{ width: "450px", zIndex: "2" }}
+          />
+          <h2
+            style={{
+              postion: "absolute",
+              marginTop: "-300px",
+              fontFamily: "Boris",
+              fontSize: "30px",
+              zIndex: "3",
+            }}
+          >
+            Oh nooo em đã <br /> hong kịp hoàn thành ùi! <br /> Thử lại nho!
           </h2>
-          <button onClick={() => window.location.reload()} style={{ fontFamily: 'Boris', margin: '10px', padding: '1px 10px', fontSize: '25px', borderRadius: '20px', backgroundColor: 'transparent', border: '4px solid #be185d', cursor: 'pointer', zIndex: '3' }}> ↻ </button>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              fontFamily: "Boris",
+              margin: "10px",
+              padding: "1px 10px",
+              fontSize: "25px",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              border: "4px solid #be185d",
+              cursor: "pointer",
+              zIndex: "3",
+            }}
+          >
+            {" "}
+            ↻{" "}
+          </button>
         </motion.div>
       )}
     </div>
