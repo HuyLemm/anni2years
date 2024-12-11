@@ -7,6 +7,7 @@ import background from "../../../assets/images/islandPage/island5/background-nig
 import pipeGreen from "../../../assets/images/islandPage/island5/pipe-green.png";
 import start from "../../../assets/images/islandPage/island5/start.png";
 import border from "../../../assets/images/islandPage/island5/border.png";
+import { useNavigate } from "react-router-dom";
 
 const Island5 = () => {
   const [showTitle, setShowTitle] = useState(false);
@@ -18,6 +19,8 @@ const Island5 = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Show title and rules with a delay
@@ -375,7 +378,7 @@ const Island5 = () => {
             Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi!🎉🥳
           </h2>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => navigate("/prize5")}
             style={{
               position: "absolute",
               marginTop: "-150px",

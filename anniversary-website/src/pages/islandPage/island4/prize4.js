@@ -11,7 +11,7 @@ import {
 import messages from "../../../components/Messages";
 import Archive from "../../../components/Archive";
 
-const Prize3 = () => {
+const Prize4 = () => {
   const navigate = useNavigate();
   const [activePopup, setActivePopup] = useState(null);
   const [completedSteps, setCompletedSteps] = useState({
@@ -40,9 +40,9 @@ const Prize3 = () => {
   const closePopup = () => {
     const currentMessage = messages.find(
       (msg, index) =>
-        (index === 6 && activePopup === "love") ||
-        (index === 7 && activePopup === "photo") ||
-        (index === 8 && activePopup === "story")
+        (index === 9 && activePopup === "love") ||
+        (index === 10 && activePopup === "photo") ||
+        (index === 11 && activePopup === "story")
     );
 
     if (currentMessage) {
@@ -85,9 +85,9 @@ const Prize3 = () => {
   const renderPopup = () => {
     const currentMessage = messages.find(
       (msg, index) =>
-        (index === 6 && activePopup === "love") ||
-        (index === 7 && activePopup === "photo") ||
-        (index === 8 && activePopup === "story")
+        (index === 9 && activePopup === "love") ||
+        (index === 10 && activePopup === "photo") ||
+        (index === 11 && activePopup === "story")
     );
 
     if (!currentMessage) return null;
@@ -254,7 +254,7 @@ const Prize3 = () => {
             style={getButtonStyle("love", "photo")}
           >
             <strong>1. Gift number 1:</strong>{" "}
-            {completedSteps.love ? "Kỷ niệm tươi rói mói mói vợ yêu❤️" : "🔒"}
+            {completedSteps.love ? "Bắn vào tim vợ yêu một cái pew 🫰" : "🔒"}
           </p>
           <p
             onClick={() =>
@@ -263,7 +263,7 @@ const Prize3 = () => {
             style={getButtonStyle("photo", "story")}
           >
             <strong>2. Gift number 2:</strong>{" "}
-            {completedSteps.photo ? "Vợ có một vé đi chụp hình ùi nè❤️" : "🔒"}
+            {completedSteps.photo ? "Vợ có một vé đi bắn súng ùi nè❤️" : "🔒"}
           </p>
           <p
             onClick={() =>
@@ -272,7 +272,7 @@ const Prize3 = () => {
             style={getButtonStyle("story", null)}
           >
             <strong>3. Gift number 3:</strong>{" "}
-            {completedSteps.story ? "Yêu vợ được 2 năm uiii 🫶" : "🔒"}
+            {completedSteps.story ? "Our phu tu réee 🏦" : "🔒"}
           </p>
         </motion.div>
       )}
@@ -359,4 +359,4 @@ const Prize3 = () => {
   );
 };
 
-export default Prize3;
+export default Prize4;

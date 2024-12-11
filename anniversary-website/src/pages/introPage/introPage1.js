@@ -41,6 +41,11 @@ const Intro1 = () => {
   const [showRoad, setShowRoad] = useState(false);
   const [bikeRacing, setBikeRacing] = useState(false);
 
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+
   const { playAudio } = useAudioManager();
 
   const navigate = useNavigate();
@@ -68,13 +73,22 @@ const Intro1 = () => {
 
   // Function to handle door click event
   const handleDoorClick = () => {
-    softPianoAudio.current.volume = 1;
-    softPianoAudio.current.loop = true;
-    softPianoAudio.current.play();
-    setDoorOpenState(true);
-    setTimeout(() => {
-      setShowContent(true);
-    }, 1500);
+    setShowAuthModal(true);
+  };
+
+  const handleAuthSubmit = () => {
+    if (username === "Paoicute" && password === "Paoiyeualvin1712") {
+      softPianoAudio.current.volume = 1;
+      softPianoAudio.current.loop = true;
+      softPianoAudio.current.play();
+      setDoorOpenState(true);
+      setShowAuthModal(false);
+      setTimeout(() => {
+        setShowContent(true);
+      }, 1500);
+    } else {
+      setAuthError("Invalid username or password. Please try again.");
+    }
   };
 
   // Function to handle answer selection
@@ -120,6 +134,63 @@ const Intro1 = () => {
       className="h-screen flex items-center justify-center  relative"
       style={{ overflow: "hidden" }}
     >
+      {showAuthModal && (
+        <div
+          className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20"
+          style={{ fontFamily: "Boris", fontSize: "20px" }}
+        >
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2
+              className="text-xl font-bold mb-4 text-center text-pink-700"
+              style={{ fontSize: "27px" }}
+            >
+              Xác thực vợ yêu Paoi 👩‍❤️‍👨
+            </h2>
+            <div className="mb-4">
+              <label className="block mb-2 font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full border rounded p-2"
+                placeholder="Enter username"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border rounded p-2"
+                placeholder="Enter password"
+              />
+            </div>
+            {authError && (
+              <p className="text-red-500 text-sm mb-4">{authError}</p>
+            )}
+            <div className="flex justify-between">
+              <button
+                onClick={handleAuthSubmit}
+                className="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setShowAuthModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {!showContent && (
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
           {/* Display paoi */}

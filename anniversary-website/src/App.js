@@ -17,6 +17,11 @@ import Island5 from "./pages/islandPage/island5/island5";
 import Island6 from "./pages/islandPage/island6/island6";
 
 import Prize1 from "./pages/islandPage/island1/prize1";
+import Prize2 from "./pages/islandPage/island2/prize2";
+import Prize3 from "./pages/islandPage/island3/prize3";
+import Prize4 from "./pages/islandPage/island4/prize4";
+import Prize5 from "./pages/islandPage/island5/prize5";
+import Prize6 from "./pages/islandPage/island6/prize6";
 
 function App() {
   return (
@@ -40,6 +45,11 @@ function App() {
           <Route path="/island6" element={<Island6 />} />
 
           <Route path="/prize1" element={<Prize1 />} />
+          <Route path="/prize2" element={<Prize2 />} />
+          <Route path="/prize3" element={<Prize3 />} />
+          <Route path="/prize4" element={<Prize4 />} />
+          <Route path="/prize5" element={<Prize5 />} />
+          <Route path="/prize6" element={<Prize6 />} />
         </Routes>
       </Router>
     </AudioManagerProvider>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import start from "../../../assets/images/islandPage/island1/start.png";
 import border from "../../../assets/images/islandPage/island1/border.png";
-
+import { useNavigate } from "react-router-dom";
 const Island6 = () => {
   const [showTitle, setShowTitle] = useState(false);
   const [showRules, setShowRules] = useState(false);
@@ -17,6 +17,8 @@ const Island6 = () => {
   const [gameComplete, setGameComplete] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false); // Trạng thái bắt đầu trò chơi
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Hiển thị tiêu đề sau 0.5 giây
@@ -466,7 +468,7 @@ const Island6 = () => {
               Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi!🎉🥳
             </h2>
             <button
-              onClick={() => window.location.reload()}
+              onClick={() => navigate("/prize6")}
               style={{
                 position: "absolute",
                 marginTop: "-150px",

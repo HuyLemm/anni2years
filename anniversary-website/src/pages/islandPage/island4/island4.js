@@ -3,8 +3,11 @@ import { motion } from "framer-motion";
 import RacingGame from "./racingGame"; // Import Racing Game Component
 import start from "../../../assets/images/islandPage/island4/start.png";
 import border from "../../../assets/images/islandPage/island4/border.png";
+import { useNavigate } from "react-router-dom";
 
 const Island4 = () => {
+  const navigate = useNavigate();
+
   const [showTitle, setShowTitle] = useState(false);
   const [showRules, setShowRules] = useState(false);
   const [showGameBoard, setShowGameBoard] = useState(false);
@@ -30,7 +33,7 @@ const Island4 = () => {
       interval = setInterval(() => {
         setScore((prevScore) => {
           const newScore = prevScore + 1;
-          if (newScore >= 20) {
+          if (newScore >= 100) {
             setGameComplete(true); // Đạt 100 điểm thì thắng
           }
           return newScore;
@@ -198,7 +201,7 @@ const Island4 = () => {
             Chúc mừng em đã <br /> hoàn thành xuất sắc <br /> trò chơi!🎉🥳
           </h2>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => navigate("/prize4")}
             style={{
               position: "absolute",
               marginTop: "-150px",

@@ -75,8 +75,8 @@ const RacingGame = ({ gameStarted, onGameOver, gameComplete }) => {
     const car_height = parseInt(car.height());
 
     let game_over = false;
-    let speed = 2;
-    let line_speed = 3;
+    let speed = 5;
+    let line_speed = 4;
 
     // Movement variables
     let move_right = false;

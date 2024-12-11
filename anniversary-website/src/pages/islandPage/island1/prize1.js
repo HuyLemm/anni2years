@@ -1,150 +1,205 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion
+import {
+  saveLove,
+  savePhoto,
+  getLoveArchive,
+  getPhotoArchive,
+} from "../../../components/Archive";
+
+import messages from "../../../components/Messages";
+import Archive from "../../../components/Archive";
 
 const Prize1 = () => {
+  const navigate = useNavigate();
   const [activePopup, setActivePopup] = useState(null);
+  const [completedSteps, setCompletedSteps] = useState({
+    love: true,
+    photo: false,
+    story: false,
+  });
 
-  const closePopup = () => setActivePopup(null);
+  const [loveData, setLoveData] = useState(getLoveArchive());
+  const [photoData, setPhotoData] = useState(getPhotoArchive());
+
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [showBoard, setShowBoard] = useState(false);
+  const [showArchive, setShowArchive] = useState(false); // State để điều khiển hiển thị
+
+  // Hiển thị dòng chúc mừng sau 0.5 giây
+  useEffect(() => {
+    const timer1 = setTimeout(() => setShowCongrats(true), 500);
+    const timer2 = setTimeout(() => setShowBoard(true), 1500);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
+
+  const closePopup = () => {
+    const currentMessage = messages.find(
+      (msg, index) =>
+        (index === 0 && activePopup === "love") ||
+        (index === 1 && activePopup === "photo") ||
+        (index === 2 && activePopup === "story")
+    );
+
+    if (currentMessage) {
+      const { description, content } = currentMessage;
+
+      if (activePopup === "love") {
+        saveLove(description, content);
+        setLoveData([
+          ...loveData,
+          {
+            id: Date.now(),
+            description,
+            timestamp: new Date().toLocaleString(),
+          },
+        ]);
+        setCompletedSteps((prev) => ({ ...prev, love: true, photo: true }));
+      }
+
+      if (activePopup === "photo") {
+        savePhoto(description, content);
+        setPhotoData([
+          ...photoData,
+          {
+            id: Date.now(),
+            description,
+            timestamp: new Date().toLocaleString(),
+          },
+        ]);
+        setCompletedSteps((prev) => ({ ...prev, photo: true, story: true }));
+      }
+
+      if (activePopup === "story") {
+        setCompletedSteps((prev) => ({ ...prev, story: true }));
+      }
+    }
+
+    setActivePopup(null);
+  };
 
   const renderPopup = () => {
-    switch (activePopup) {
-      case "story":
-        return (
-          <div
+    const currentMessage = messages.find(
+      (msg, index) =>
+        (index === 0 && activePopup === "love") ||
+        (index === 1 && activePopup === "photo") ||
+        (index === 2 && activePopup === "story")
+    );
+
+    if (!currentMessage) return null;
+
+    const { description, content } = currentMessage;
+
+    return (
+      <AnimatePresence>
+        <motion.div
+          key="popup"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            fontSize: "24px",
+            position: "absolute",
+            top: "27%",
+            left: "38%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "#fff",
+            borderRadius: "15px",
+            padding: "20px",
+            boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
+            zIndex: 100,
+            width: "500px",
+            height: "300px",
+            textAlign: "center",
+            fontWeight: "lighter",
+          }}
+        >
+          <h2
             style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "#fff",
-              borderRadius: "15px",
-              padding: "20px",
-              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
-              zIndex: 100,
-              width: "80%",
-              maxWidth: "500px",
-              textAlign: "center",
+              fontWeight: "bold",
+              color: "#be185d",
+              marginBottom: "10px",
+              fontSize: "26px",
             }}
           >
-            <h2 style={{ color: "#be185d", marginBottom: "10px" }}>
-              📖 Cùng Đi Vào Câu Chuyện Nào!
-            </h2>
-            <p>
-              Em đã làm very amazing gud job để hoàn thành nhiệm vụ òi neee, em
-              sẽ dắt em đi qua về câu chuyện gặp gỡ kết duyên của tụi mình nhé
-              💞💍
-            </p>
+            {description}
+          </h2>
+          <p dangerouslySetInnerHTML={{ __html: content }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
             <button
               onClick={closePopup}
               style={{
-                marginTop: "20px",
                 padding: "10px 20px",
-                fontSize: "24px",
+                fontSize: "20px",
                 borderRadius: "10px",
                 backgroundColor: "#be185d",
                 color: "#fff",
                 border: "none",
                 cursor: "pointer",
+                marginRight: "10px",
               }}
             >
-              Khám phá
+              Close
             </button>
+            {activePopup === "story" && (
+              <button
+                onClick={() => navigate("/story1")}
+                style={{
+                  padding: "10px 20px",
+                  fontSize: "20px",
+                  borderRadius: "10px",
+                  backgroundColor: "#4CAF50",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                Explore
+              </button>
+            )}
           </div>
-        );
-      case "photo":
-        return (
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "#fff",
-              borderRadius: "15px",
-              padding: "20px",
-              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
-              zIndex: 100,
-              width: "80%",
-              maxWidth: "500px",
-              textAlign: "center",
-            }}
-          >
-            <h2 style={{ color: "#be185d", marginBottom: "10px" }}>
-              🎫 Vé Đi Chụp Hình
-            </h2>
-            <p>
-              Ngày 20/12/2024, bạn sẽ được chụp hình lung linh tại studio của
-              Alvin. Đón chờ nhé, vợ yêu ơi! 📸❤️
-            </p>
-            <button
-              onClick={closePopup}
-              style={{
-                marginTop: "20px",
-                padding: "10px 20px",
-                fontSize: "16px",
-                borderRadius: "10px",
-                backgroundColor: "#be185d",
-                color: "#fff",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Đóng
-            </button>
-          </div>
-        );
-      case "love":
-        return (
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "#fff",
-              borderRadius: "15px",
-              padding: "20px",
-              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
-              zIndex: 100,
-              width: "80%",
-              maxWidth: "500px",
-              textAlign: "center",
-            }}
-          >
-            <h2 style={{ color: "#be185d", marginBottom: "10px" }}>
-              ❤️ Tình Yêu To Bự
-            </h2>
-            <p>
-              Vợ ơi vợ thật đáng yêu, <br />
-              Tim anh đập rộn mỗi chiều hoàng hôn. <br />
-              Hãy luôn nắm tay ta bước, <br />
-              Cuộc đời này mãi mãi không buông! ❤️😄
-            </p>
-            <button
-              onClick={closePopup}
-              style={{
-                marginTop: "20px",
-                padding: "10px 20px",
-                fontSize: "16px",
-                borderRadius: "10px",
-                backgroundColor: "#be185d",
-                color: "#fff",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Đóng
-            </button>
-          </div>
-        );
-      default:
-        return null;
+        </motion.div>
+      </AnimatePresence>
+    );
+  };
+
+  const getButtonStyle = (step, nextStep) => {
+    const isActive = !completedSteps[nextStep] && completedSteps[step];
+    const isCurrentPopup = activePopup === step;
+
+    if (isCurrentPopup) {
+      return { cursor: "pointer", color: "#be185d", lineHeight: "4" };
     }
+
+    return isActive
+      ? {
+          animation: "blinkingText 1s infinite",
+          cursor: "pointer",
+          color: "#be185d",
+          lineHeight: "3",
+          display: "inline-block",
+        }
+      : completedSteps[step]
+      ? { cursor: "pointer", color: "#333", lineHeight: "4" }
+      : { cursor: "not-allowed", color: "grey", lineHeight: "4" };
   };
 
   return (
     <div
       style={{
-        display: "flex",
+        top: "15px",
+        position: "absolute",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
@@ -153,57 +208,153 @@ const Prize1 = () => {
         backgroundColor: "#fce7f3",
         fontFamily: "Boris",
         position: "relative",
+        fontWeight: "bold",
       }}
     >
-      <h1 style={{ fontSize: "36px", color: "#be185d", marginBottom: "20px" }}>
-        🎁 Chúc Mừng Bạn Nhận Được Giải Thưởng! 🎁
-      </h1>
-      <div
+      {showCongrats && (
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            fontSize: "40px",
+            color: "#be185d",
+            marginBottom: "20px",
+          }}
+        >
+          Chúc mừng bé yêu <br /> 🎁 đã nhận được giải thưởng nhooo! 🎁
+        </motion.h1>
+      )}
+      {showBoard && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          style={{
+            top: "24%",
+            left: "29%",
+            display: "fixed",
+            position: "absolute",
+            width: "800px",
+            height: "400px",
+            fontSize: "28px",
+            color: "#333",
+            backgroundColor: "#fff",
+            padding: "20px",
+            borderRadius: "15px",
+            boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+            textAlign: "center",
+            lineHeight: "4",
+          }}
+        >
+          <p
+            onClick={() =>
+              completedSteps.love && !activePopup && setActivePopup("love")
+            }
+            style={getButtonStyle("love", "photo")}
+          >
+            <strong>1. Gift number 1:</strong>{" "}
+            {completedSteps.love ? "Vợ bít tình yêu của anh là gì hăm❤️" : "🔒"}
+          </p>
+          <p
+            onClick={() =>
+              completedSteps.photo && !activePopup && setActivePopup("photo")
+            }
+            style={getButtonStyle("photo", "story")}
+          >
+            <strong>2. Gift number 2:</strong>{" "}
+            {completedSteps.photo ? "Vợ có một vé đi cà phê ùi nè❤️" : "🔒"}
+          </p>
+          <p
+            onClick={() =>
+              completedSteps.story && !activePopup && setActivePopup("story")
+            }
+            style={getButtonStyle("story", null)}
+          >
+            <strong>3. Gift number 3:</strong>{" "}
+            {completedSteps.story ? "Mình gặp nhao như nào zị taa 📖" : "🔒"}
+          </p>
+        </motion.div>
+      )}
+      {renderPopup()}
+      {/* Nút mở Archive */}
+      <button
+        onClick={() => setShowArchive(true)}
         style={{
-          fontSize: "24px",
-          color: "#333",
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
           backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "15px",
-          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
-          maxWidth: "600px",
-          textAlign: "left",
+          color: "#fff",
+          border: "none",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          fontSize: "20px",
+          cursor: "pointer",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         }}
       >
-        <p
-          onClick={() => setActivePopup("story")}
+        📂
+      </button>
+      {showArchive && (
+        <div
           style={{
-            cursor: "pointer",
-            color: "#be185d",
-            textDecoration: "underline",
-            marginBottom: "10px",
+            position: "fixed",
+            top: "10%",
+            left: "10%",
+            width: "80%",
+            height: "80%",
+            zIndex: 1000,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: "30px",
           }}
         >
-          📖 <strong>Câu truyện:</strong> Click để khám phá câu chuyện thú vị!
-        </p>
-        <p
-          onClick={() => setActivePopup("photo")}
-          style={{
-            cursor: "pointer",
-            color: "#be185d",
-            textDecoration: "underline",
-            marginBottom: "10px",
-          }}
-        >
-          🎫 <strong>Vé đi chụp hình:</strong> Click để biết thông tin chi tiết!
-        </p>
-        <p
-          onClick={() => setActivePopup("love")}
-          style={{
-            cursor: "pointer",
-            color: "#be185d",
-            textDecoration: "underline",
-          }}
-        >
-          ❤️ <strong>Tình yêu to bự:</strong> Click để nhận trái tim đặc biệt!
-        </p>
-      </div>
-      {renderPopup()}
+          <div
+            style={{
+              position: "relative",
+              width: "90%",
+              height: "90%",
+              backgroundColor: "#fff",
+              borderRadius: "15px",
+              overflow: "hidden",
+            }}
+          >
+            <button
+              onClick={() => setShowArchive(false)}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                backgroundColor: "#ccc",
+                color: "#fff",
+                border: "none",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                fontSize: "18px",
+                cursor: "pointer",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              ✖️
+            </button>
+            <Archive />
+          </div>
+        </div>
+      )}
+      <style>
+        {`
+          @keyframes blinkingText {
+            0% { font-size: 28px; }
+            50% { font-size: 30px; }
+            100% { font-size: 28px; }
+          }
+        `}
+      </style>
     </div>
   );
 };
