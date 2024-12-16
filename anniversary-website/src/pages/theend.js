@@ -25,7 +25,7 @@ const TheEnd = () => {
     "6. Dạo chơi trung tâm thương mại chill chill 🛍️",
   ];
 
-  const imageUrl = "https://i.imgur.com/QyPbhbQ.png";
+  const imageUrl = "https://i.imgur.com/6r9yNyl.png";
 
   useEffect(() => {
     // Hiển thị tiêu đề sau 1 giây
