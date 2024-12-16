@@ -36,7 +36,7 @@ export const messages = [
   //island3
   {
     description: "Kỷ Niệm Tinh Khôi",
-    content: `Photobooth sáng đậm tình yêu <br>
+    content: `Photoby sáng đậm tình yêu <br>
     Chụp xong lưu giữ, mỗi chiều ngắm nhau <br>
     Nụ cười em đẹp như sao <br>
     Cùng nhau ghi dấu, mãi ngọt ngào bên!📸`,

@@ -27,7 +27,7 @@ var messages = [//island1
 }, //island3
 {
   description: "Kỷ Niệm Tinh Khôi",
-  content: "Photobooth s\xE1ng \u0111\u1EADm t\xECnh y\xEAu <br>\n    Ch\u1EE5p xong l\u01B0u gi\u1EEF, m\u1ED7i chi\u1EC1u ng\u1EAFm nhau <br>\n    N\u1EE5 c\u01B0\u1EDDi em \u0111\u1EB9p nh\u01B0 sao <br>\n    C\xF9ng nhau ghi d\u1EA5u, m\xE3i ng\u1ECDt ng\xE0o b\xEAn!\uD83D\uDCF8"
+  content: "Photoby s\xE1ng \u0111\u1EADm t\xECnh y\xEAu <br>\n    Ch\u1EE5p xong l\u01B0u gi\u1EEF, m\u1ED7i chi\u1EC1u ng\u1EAFm nhau <br>\n    N\u1EE5 c\u01B0\u1EDDi em \u0111\u1EB9p nh\u01B0 sao <br>\n    C\xF9ng nhau ghi d\u1EA5u, m\xE3i ng\u1ECDt ng\xE0o b\xEAn!\uD83D\uDCF8"
 }, {
   description: "Vé đi chụp hình",
   content: "H\xF4m nay, m\xECnh s\u1EBD c\xF9ng nhau ch\u1EE5p nh\u1EEFng t\u1EA5m h\xECnh th\u1EADt vui t\u01B0\u01A1i v\xE0 nh\xED nh\u1EA3nh kh\xE1 b\u1EA3nh c\xF9ng nhau nho em y\xEAuuu! \u2728\uD83D\uDCF7"

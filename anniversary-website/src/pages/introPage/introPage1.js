@@ -60,16 +60,20 @@ const Intro1 = () => {
       }, delay);
     };
 
-    if (step === 0) {
-      handleStepTransition(1, 4000);
-    } else if (step === 1) {
-      handleStepTransition(2, 4500);
+    // Kiểm soát luồng hiển thị dựa trên step
+    if (doorOpenState && showContent) {
+      if (step === 0) {
+        // Hiển thị "Chào mừng đến với Xứ sở Tình yêu!" trong 4 giây
+        handleStepTransition(1, 4000);
+      } else if (step === 1) {
+        // Hiển thị "Trước khi vào, trả lời giúp anh vài câu hỏi" trong 4.5 giây
+        handleStepTransition(2, 4500);
+      }
     }
-
     return () => {
       clearTimeout(timer);
     };
-  }, [step]);
+  }, [step, doorOpenState, showContent]);
 
   // Function to handle door click event
   const handleDoorClick = () => {
@@ -83,6 +87,7 @@ const Intro1 = () => {
       softPianoAudio.current.play();
       setDoorOpenState(true);
       setShowAuthModal(false);
+      setStep(0); // Reset step về 0 khi cửa mở
       setTimeout(() => {
         setShowContent(true);
       }, 1500);
@@ -435,273 +440,276 @@ const Intro1 = () => {
           />
 
           {/* AnimatePresence for further steps */}
-          <AnimatePresence mode="wait">
-            {step === 0 && (
-              <motion.div
-                key="welcome"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 2 }}
-                className="absolute flex items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              >
-                <h1
-                  className="text-4xl font-bold text-pink-700"
-                  style={{ fontSize: "53px", fontFamily: "Hoasen" }}
+          {showContent && (
+            <AnimatePresence mode="wait">
+              {step === 0 && (
+                <motion.div
+                  key="welcome"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 2 }}
+                  className="absolute flex items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 >
-                  Chào mừng đến với Xứ sở Tình yêu!🌷
-                </h1>
-              </motion.div>
-            )}
+                  <h1
+                    className="text-4xl font-bold text-pink-700"
+                    style={{ fontSize: "53px", fontFamily: "Hoasen" }}
+                  >
+                    Chào mừng đến với Xứ sở Tình yêu!🌷
+                  </h1>
+                </motion.div>
+              )}
 
-            {step === 1 && (
-              <motion.div
-                key="intro"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 3.5 }}
-                className="absolute flex items-center justify-center text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              >
-                <p
-                  className="text-lg text-pink-700"
-                  style={{
-                    fontSize: "40px",
-                    fontFamily: "Hoasen",
-                    lineHeight: "1.5",
-                    letterSpacing: "0.05em",
-                  }}
+              {step === 1 && (
+                <motion.div
+                  key="intro"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 3.5 }}
+                  className="absolute flex items-center justify-center text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 >
-                  Trước khi vào, trả lời giúp anh vài câu hỏi để xem em có đúng
-                  là
-                  <br />
-                  <strong>Paoi yêu dấu của Alvin</strong> hong nho!💓
-                </p>
-              </motion.div>
-            )}
+                  <p
+                    className="text-lg text-pink-700"
+                    style={{
+                      fontSize: "40px",
+                      fontFamily: "Hoasen",
+                      lineHeight: "1.5",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    Trước khi vào, trả lời giúp anh vài câu hỏi để xem em có
+                    đúng là
+                    <br />
+                    <strong>Paoi yêu dấu của Alvin</strong> hong nho!💓
+                  </p>
+                </motion.div>
+              )}
 
-            {step >= 2 && step < 2 + questions.length && (
-              <motion.div
-                key={`question-${step - 2}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="absolute rounded-lg shadow-paper bg-white p-8 w-full max-w-lg text-center flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                style={{
-                  display: "grid",
-                  gridTemplateRows: "auto 1fr",
-                  border: "2px dashed #d3d3d3",
-                  backgroundImage:
-                    "linear-gradient(to bottom right, #fffbe7, #f8e1a4)",
-                  boxShadow:
-                    "10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.5)",
-                  width: "100%",
-                  maxWidth: "600px",
-                  maxHeight: "600px",
-                }}
-              >
-                <div
-                  className="w-full flex justify-center items-center relative"
+              {step >= 2 && step < 2 + questions.length && (
+                <motion.div
+                  key={`question-${step - 2}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                  className="absolute rounded-lg shadow-paper bg-white p-8 w-full max-w-lg text-center flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                   style={{
-                    background: "#8B4513",
-                    borderTopLeftRadius: "10px",
-                    borderTopRightRadius: "10px",
-                    height: "30px",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                    marginTop: "-40px",
-                    width: "600px",
+                    display: "grid",
+                    gridTemplateRows: "auto 1fr",
+                    border: "2px dashed #d3d3d3",
+                    backgroundImage:
+                      "linear-gradient(to bottom right, #fffbe7, #f8e1a4)",
+                    boxShadow:
+                      "10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.5)",
+                    width: "100%",
+                    maxWidth: "600px",
+                    maxHeight: "600px",
                   }}
                 >
                   <div
-                    className="absolute -top-3 flex gap-4"
-                    style={{ left: "10%", right: "10%" }}
-                  >
-                    <div
-                      className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
-                      style={{
-                        background: "#f1c40f",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                    <div
-                      className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
-                      style={{
-                        background: "#e74c3c",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                    <div
-                      className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
-                      style={{
-                        background: "#3498db",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div
-                  className="w-full flex flex-col items-center justify-center p-6"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom right, #fffbe7, #f8e1a4)",
-                    borderBottomLeftRadius: "10px",
-                    borderBottomRightRadius: "10px",
-                    width: "100%",
-                  }}
-                >
-                  <h2
-                    className="text-lg font-semibold mb-10"
+                    className="w-full flex justify-center items-center relative"
                     style={{
-                      fontSize: "37px",
-                      fontFamily: "Hatton-Regular",
-                      lineHeight: "1.2",
+                      background: "#8B4513",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      height: "30px",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                      marginTop: "-40px",
+                      width: "600px",
                     }}
                   >
-                    {questions[step - 2].question}
-                  </h2>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-10">
-                    {questions[step - 2].options.map((option) => (
-                      <button
-                        key={option}
-                        className="py-2 px-5 border rounded-md bg-gradient-to-r from-pink-100 to-pink-200 shadow-md hover:shadow-pink-300 hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center"
-                        onClick={() => handleAnswer(step - 2, option)}
+                    <div
+                      className="absolute -top-3 flex gap-4"
+                      style={{ left: "10%", right: "10%" }}
+                    >
+                      <div
+                        className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
                         style={{
-                          fontSize: "24px",
-                          color: "#d63384",
-                          border: "2px solid #f48fb1",
-                          borderRadius: "20px",
-                          minWidth: "250px",
-                          height: "100px",
-                          fontWeight: "bold",
+                          background: "#f1c40f",
+                          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                         }}
-                      >
-                        🌸 {option}
-                      </button>
-                    ))}
+                      ></div>
+                      <div
+                        className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
+                        style={{
+                          background: "#e74c3c",
+                          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                        }}
+                      ></div>
+                      <div
+                        className="w-4 h-4 bg-gray-300 rounded-full border-2 border-gray-500"
+                        style={{
+                          background: "#3498db",
+                          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                        }}
+                      ></div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
 
-            {step === 2 + questions.length && (
-              <motion.div
-                key="next"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                onAnimationStart={() => {
-                  const tadaAudio = new Audio(tadaSound);
-                  tadaAudio.volume = 0.1;
-                  tadaAudio.play();
-                }}
-                style={{ zIndex: 3, top: "330px" }}
-              >
-                {/* Group border and text together in the same position */}
-                <div className="relative flex items-center justify-center">
-                  {/* Border Image */}
+                  <div
+                    className="w-full flex flex-col items-center justify-center p-6"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom right, #fffbe7, #f8e1a4)",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    <h2
+                      className="text-lg font-semibold mb-10"
+                      style={{
+                        fontSize: "37px",
+                        fontFamily: "Hatton-Regular",
+                        lineHeight: "1.2",
+                      }}
+                    >
+                      {questions[step - 2].question}
+                    </h2>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-10">
+                      {questions[step - 2].options.map((option) => (
+                        <button
+                          key={option}
+                          className="py-2 px-5 border rounded-md bg-gradient-to-r from-pink-100 to-pink-200 shadow-md hover:shadow-pink-300 hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center"
+                          onClick={() => handleAnswer(step - 2, option)}
+                          style={{
+                            fontSize: "24px",
+                            color: "#d63384",
+                            border: "2px solid #f48fb1",
+                            borderRadius: "20px",
+                            minWidth: "250px",
+                            height: "100px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          🌸 {option}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {step === 2 + questions.length && (
+                <motion.div
+                  key="next"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                  className="absolute flex flex-col items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  onAnimationStart={() => {
+                    const tadaAudio = new Audio(tadaSound);
+                    tadaAudio.volume = 0.1;
+                    tadaAudio.play();
+                  }}
+                  style={{ zIndex: 3, top: "330px" }}
+                >
+                  {/* Group border and text together in the same position */}
+                  <div className="relative flex items-center justify-center">
+                    {/* Border Image */}
+                    <img
+                      src={border}
+                      alt="border"
+                      style={{ width: "460px", height: "370px", zIndex: 2 }}
+                    />
+
+                    {/* Text positioned perfectly within the border */}
+                    <h2
+                      className="absolute text-center text-pink-700"
+                      style={{
+                        fontSize: "21px",
+                        fontFamily: "Boris",
+                        lineHeight: "1.5",
+                        letterSpacing: "0.05em",
+                        zIndex: 3,
+                      }}
+                    >
+                      Em đúng là vợ yêu của anh òi. <br /> Anh sẽ dẫn em đi tham
+                      quan <br />
+                      xứ sở của tụi mình nhé bby 💕
+                    </h2>
+                  </div>
+
+                  {/* Arrow Image */}
                   <img
-                    src={border}
-                    alt="border"
-                    style={{ width: "460px", height: "370px", zIndex: 2 }}
+                    src={arrow}
+                    alt="arrow"
+                    className="absolute"
+                    style={{ top: "250px", left: "350px", width: "150px" }}
                   />
 
-                  {/* Text positioned perfectly within the border */}
-                  <h2
-                    className="absolute text-center text-pink-700"
+                  {/* Button Image with flashing effect until clicked */}
+                  <motion.img
+                    src={button}
+                    alt="button"
+                    className="absolute cursor-pointer"
                     style={{
-                      fontSize: "21px",
-                      fontFamily: "Boris",
-                      lineHeight: "1.5",
-                      letterSpacing: "0.05em",
+                      top: "320px",
+                      left: "310px",
+                      width: "70px",
+                      animation: !buttonClicked ? "flash 1s infinite" : "none",
                       zIndex: 3,
                     }}
-                  >
-                    Em đúng là vợ yêu của anh òi. <br /> Anh sẽ dẫn em đi tham
-                    quan <br />
-                    xứ sở của tụi mình nhé bby 💕
-                  </h2>
-                </div>
-
-                {/* Arrow Image */}
-                <img
-                  src={arrow}
-                  alt="arrow"
-                  className="absolute"
-                  style={{ top: "250px", left: "350px", width: "150px" }}
-                />
-
-                {/* Button Image with flashing effect until clicked */}
-                <motion.img
-                  src={button}
-                  alt="button"
-                  className="absolute cursor-pointer"
-                  style={{
-                    top: "320px",
-                    left: "310px",
-                    width: "70px",
-                    animation: !buttonClicked ? "flash 1s infinite" : "none",
-                    zIndex: 3,
-                  }}
-                  onClick={handleButtonClick}
-                />
-
-                {/* Road Image */}
-                {showRoad && (
-                  <img
-                    src={road}
-                    alt="road"
-                    className="absolute"
-                    style={{
-                      top: "280px",
-                      left: "175px",
-                      width: "500px",
-                      zIndex: 4,
-                    }}
+                    onClick={handleButtonClick}
                   />
-                )}
 
-                {/* Racing Bike Animation - Moving from A to B vertically, then to C horizontally */}
-                {bikeRacing && (
-                  <motion.img
-                    src={racing}
-                    alt="racing"
-                    className="absolute"
-                    initial={{ x: "0px", y: "-100px" }}
-                    animate={{
-                      x: ["0px", "0px", "330px"], // 3rd
-                      y: ["-100px", "230px", "230px"], // 2nd
-                      rotate: [0, -5, 5, -5, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      ease: "easeInOut",
-                      onComplete: () => {
-                        navigate("/intro2");
-                      },
-                    }}
-                    style={{
-                      top: "350px",
-                      left: "200px",
-                      width: "100px",
-                      zIndex: 5,
-                    }}
-                  />
-                )}
-              </motion.div>
-            )}
-            <style>
-              {`
+                  {/* Road Image */}
+                  {showRoad && (
+                    <img
+                      src={road}
+                      alt="road"
+                      className="absolute"
+                      style={{
+                        top: "280px",
+                        left: "175px",
+                        width: "500px",
+                        zIndex: 4,
+                      }}
+                    />
+                  )}
+
+                  {/* Racing Bike Animation - Moving from A to B vertically, then to C horizontally */}
+                  {bikeRacing && (
+                    <motion.img
+                      src={racing}
+                      alt="racing"
+                      className="absolute"
+                      initial={{ x: "0px", y: "-100px" }}
+                      animate={{
+                        x: ["0px", "0px", "330px"], // 3rd
+                        y: ["-100px", "230px", "230px"], // 2nd
+                        rotate: [0, -5, 5, -5, 0],
+                      }}
+                      transition={{
+                        duration: 6,
+                        ease: "easeInOut",
+                        onComplete: () => {
+                          navigate("/intro2");
+                        },
+                      }}
+                      style={{
+                        top: "350px",
+                        left: "200px",
+                        width: "100px",
+                        zIndex: 5,
+                      }}
+                    />
+                  )}
+                </motion.div>
+              )}
+
+              <style>
+                {`
               @keyframes flash {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.5; }
               }
             `}
-            </style>
-          </AnimatePresence>
+              </style>
+            </AnimatePresence>
+          )}
         </>
       )}
     </div>

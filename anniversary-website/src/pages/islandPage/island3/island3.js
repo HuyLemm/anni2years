@@ -253,27 +253,22 @@ const Island3 = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="grid grid-cols-4"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
             gap: "20px",
-            marginTop: "130px",
+            marginTop: "150px",
+            padding: "20px",
+            maxWidth: "800px",
             zIndex: 1,
           }}
         >
           {cards.map((cardData, index) => (
             <motion.div
               key={index}
-              className={`card ${
-                flippedCards.includes(index) ||
-                matchedPairs.includes(cardData.id)
-                  ? "flipped"
-                  : ""
-              }`}
               onClick={() => handleFlip(index)}
               style={{
-                width: "153px",
+                width: "150px",
                 height: "180px",
                 perspective: "1000px",
                 cursor: "pointer",
@@ -281,7 +276,6 @@ const Island3 = () => {
               whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="inner-card"
                 initial={{ rotateY: 0 }}
                 animate={{
                   rotateY:
@@ -298,10 +292,9 @@ const Island3 = () => {
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* Mặt trước của thẻ (khi chưa lật) */}
                 <motion.img
                   src={card}
-                  alt="Memory Card Back"
+                  alt="Card Back"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -309,16 +302,16 @@ const Island3 = () => {
                     backfaceVisibility: "hidden",
                   }}
                 />
-                {/* Mặt sau của thẻ (khi đã lật) */}
                 <motion.img
                   src={cardData.src}
-                  alt="Memory Card Front"
+                  alt="Card Front"
                   style={{
                     width: "100%",
                     height: "100%",
                     position: "absolute",
                     transform: "rotateY(180deg)",
                     backfaceVisibility: "hidden",
+                    borderRadius: "20px",
                   }}
                 />
               </motion.div>

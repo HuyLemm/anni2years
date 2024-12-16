@@ -23,6 +23,15 @@ import Prize4 from "./pages/islandPage/island4/prize4";
 import Prize5 from "./pages/islandPage/island5/prize5";
 import Prize6 from "./pages/islandPage/island6/prize6";
 
+import Story1 from "./pages/islandPage/island1/story1";
+import Story2 from "./pages/islandPage/island2/story2";
+import Story3 from "./pages/islandPage/island3/story3";
+import Story4 from "./pages/islandPage/island4/story4";
+import Story5 from "./pages/islandPage/island5/story5";
+import Story6 from "./pages/islandPage/island6/story6";
+
+import TheEnd from "./pages/theend";
+
 function App() {
   return (
     <AudioManagerProvider>
@@ -50,6 +59,15 @@ function App() {
           <Route path="/prize4" element={<Prize4 />} />
           <Route path="/prize5" element={<Prize5 />} />
           <Route path="/prize6" element={<Prize6 />} />
+
+          <Route path="/story1" element={<Story1 />} />
+          <Route path="/story2" element={<Story2 />} />
+          <Route path="/story3" element={<Story3 />} />
+          <Route path="/story4" element={<Story4 />} />
+          <Route path="/story5" element={<Story5 />} />
+          <Route path="/story6" element={<Story6 />} />
+
+          <Route path="/theend" element={<TheEnd />} />
         </Routes>
       </Router>
     </AudioManagerProvider>

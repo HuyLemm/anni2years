@@ -154,7 +154,7 @@ const Prize4 = () => {
             </button>
             {activePopup === "story" && (
               <button
-                onClick={() => navigate("/story1")}
+                onClick={() => navigate("/story4")}
                 style={{
                   padding: "10px 20px",
                   fontSize: "20px",
