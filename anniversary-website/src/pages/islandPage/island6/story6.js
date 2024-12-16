@@ -248,7 +248,7 @@ const Modal = ({ message, isSuccess, onClose }) => {
       >
         <h2
           style={{
-            color: "#be185d",
+            color: "#454444",
             fontFamily: "Boris",
             fontSize: "30px",
             fontWeight: "bold",

@@ -207,6 +207,19 @@ const HomePage = () => {
         }}
       />
 
+      <img
+        src={road}
+        alt="paoi"
+        style={{
+          position: "absolute",
+          top: "29%",
+          left: "73%",
+          width: "250px",
+          transform: "rotate(140deg)",
+          zIndex: 0,
+        }}
+      />
+
       {/* 1. 330 50, 2. 530, 550 3. 400,750 4. 530,1100 5.250,1400 6.   */}
       {/* Câu chuyện gặp gỡ */}
       <img
@@ -221,7 +234,7 @@ const HomePage = () => {
           left: 50,
           width: "300px",
           borderRadius: "50%",
-          opacity: unlockedIslands.island1 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island1 ? "pointer" : "not-allowed",
         }}
       />
@@ -238,7 +251,7 @@ const HomePage = () => {
           left: 300,
           width: "300px",
           borderRadius: "50%",
-          opacity: unlockedIslands.island2 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island2 ? "pointer" : "not-allowed",
         }}
       />
@@ -255,7 +268,7 @@ const HomePage = () => {
           left: 600,
           borderRadius: "50%",
           width: "300px",
-          opacity: unlockedIslands.island3 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island3 ? "pointer" : "not-allowed",
         }}
       />
@@ -273,7 +286,7 @@ const HomePage = () => {
           width: "300px",
           borderRadius: "50%",
 
-          opacity: unlockedIslands.island4 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island4 ? "pointer" : "not-allowed",
         }}
       />
@@ -292,7 +305,7 @@ const HomePage = () => {
           width: "300px",
           borderRadius: "50%",
 
-          opacity: unlockedIslands.island5 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island5 ? "pointer" : "not-allowed",
         }}
       />
@@ -310,7 +323,7 @@ const HomePage = () => {
           width: "300px",
           borderRadius: "50%",
 
-          opacity: unlockedIslands.island6 ? 1 : 0.5,
+          opacity: 1,
           cursor: unlockedIslands.island6 ? "pointer" : "not-allowed",
         }}
       />
